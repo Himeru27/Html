@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+
+
+</style>
+
+<body>
+<h1>Registration Form</h1>
+
+<form>
+    <label form="Last">Butang sa imong ngalan dong! </label><br>
+    <br>
+    <label form="Firstname">First Name:</label><br>
+    <input type="Text"id="Firstname" name="Firstname" required>
+    <br>
+    <label form="Middle">Middle Initial: </label> <br>
+    <input type="Text"id="Middle" name="Middle" required>
+    <br>
+    <label form="Last">Last Name: </label><br>
+    <input type="text"id="Last" name="Last" required>
+    <br><br>
+    <label form="Password">Password </label><br>
+    <input type="password"id="Password" name="Password" required>
+    
+    <br><br>
+    <label for="datemin">Enter a date: </label>
+    <input type="date" id="datemin" name="datemin" min="2025-02-24" required><br><br>
+    <label for="quantity">Quantity (between 1 and 10):</label><br><br>
+    <input type="number" id="quantity" name="quantity" min="1" max="10" required>
+    <br><br>
+
+    <label>Pilii imong sakyanan</label>
+    
+
+    <select required>
+        <option value="Male" required>Ferrari</option>
+        <option value="Female">Toyota</option>
+        <option value="Bayot">Sikad</option><br>
+        <br>
+
+    </select>
+    
+    <br><br>
+    <input type="radio" form="Lalake" name="Male"> Male
+    <input type="radio" form="Lalake" name="Male"> Female
+
+    <br><br>
+
+    <label form="files">Select a file </label><br>
+    <input type="file"id="files" name="files" required>
+
+    <br><br>
+    <label form="Sigma">Are you a sigma boy?
+    <input type="checkbox"id="Sigma" name="Sigma" required>
+
+    <br><br>
+    <input type="submit" value="Register">
+    <input type="reset" value="Clear?">
+    <br><br>
+    <textarea id="textbox" name="textbox" rows="2" cols="60">
+        Bantay kalang dili nimo bayaran ang imong utang
+        </textarea>
+    <br>
+    <input type="color" value="#FF00FF">
+    <br>
+
+    <br>
+    <input type="button" onclick="alert('Hello! Your computer has a virus.. Please restart your computer now!')" value="Show me!">
+</form>
+
+    
+</body>
+</html>
