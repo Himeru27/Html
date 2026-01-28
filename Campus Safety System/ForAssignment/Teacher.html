@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            background: url('image.png'); 
+            background-size: cover; 
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .dashboard { 
+            background: white; 
+            border-radius: 10px; 
+            max-width: 1200px; 
+            margin: 20px auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #2196F3, #21CBF3); 
+            color: white; 
+            border-radius: 10px 10px 0 0; 
+            padding: 20px;
+        }
+        .student-card { 
+            background: white; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            padding: 15px; 
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .student-card:hover {
+            transform: translateY(-5px);
+        }
+        .grade-box {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .passed { 
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            font-size: 12px;
+        }
+        .failed { 
+            background-color: #f44336; 
+            color: white; 
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: inline-block;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="w3-container w3-padding">
+        <div class="dashboard w3-card-4">
+            <!-- Header Section -->
+            <div class="header">
+                <div class="w3-row">
+                    <div class="w3-col m8">
+                        <h2><i class="fas fa-chalkboard-teacher"></i> Teacher Portal</h2>
+                        <p id="teacherName">Loading...</p>
+                    </div>
+                    <div class="w3-col m4 w3-right-align">
+                        <button class="w3-button w3-round w3-white" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="w3-container w3-padding-24">
+                <h3><i class="fas fa-users"></i> Student Grades - First Semester</h3>
+                <p>Total Students: <span id="totalStudents">10</span></p>
+                
+                <div class="w3-row-padding" id="students"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Default student data
+        const defaultStudents = [
+            { name: 'Ana Cruz', p1: 85, p2: 88, p3: 90 },
+            { name: 'Ben Santos', p1: 78, p2: 80, p3: 82 },
+            { name: 'Carla Reyes', p1: 90, p2: 92, p3: 94 },
+            { name: 'Daniel Flores', p1: 84, p2: 86, p3: 88 },
+            { name: 'Ella Garcia', p1: 88, p2: 89, p3: 91 },
+            { name: 'Francis Lim', p1: 79, p2: 81, p3: 83 },
+            { name: 'Grace Dela Cruz', p1: 92, p2: 93, p3: 95 },
+            { name: 'Hannah Villanueva', p1: 86, p2: 87, p3: 89 },
+            { name: 'Ivan Mendoza', p1: 80, p2: 82, p3: 84 },
+            { name: 'Joyce Navarro', p1: 89, p2: 90, p3: 92 }
+        ];
+
+        // Check if user is logged in as teacher
+        function checkLogin() {
+            const userData = localStorage.getItem('currentUser');
+            if (!userData) {
+                alert('Please login first');
+                window.location.href = 'index.html';
+                return null;
+            }
+            
+            const user = JSON.parse(userData);
+            if (user.role !== 'teacher') {
+                alert('Access denied. Teacher only.');
+                window.location.href = 'index.html';
+                return null;
+            }
+            
+            return user;
+        }
+
+        // Calculate final grade based on average score
+        function calculateGrade(average) {
+            if (average >= 98) return '1.00';
+            if (average >= 95) return '1.25';
+            if (average >= 92) return '1.50';
+            if (average >= 89) return '1.75';
+            if (average >= 86) return '2.00';
+            if (average >= 83) return '2.25';
+            if (average >= 80) return '2.50';
+            if (average >= 77) return '2.75';
+            if (average >= 75) return '3.00';
+            return '5.00';
+        }
+
+        // Calculate average of three scores
+        function calculateAverage(p1, p2, p3) {
+            return Math.round((p1 + p2 + p3) / 3);
+        }
+
+        // Check if student passed (75 and above)
+        function checkIfPassed(average) {
+            return average >= 75;
+        }
+
+        // Display all students
+        function displayStudents() {
+            const container = document.getElementById('students');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < defaultStudents.length; i++) {
+                const student = defaultStudents[i];
+                
+                // Calculate values
+                const average = calculateAverage(student.p1, student.p2, student.p3);
+                const grade = calculateGrade(average);
+                const passed = checkIfPassed(average);
+                
+                // Create student card
+                const card = `
+                    <div class="w3-col m6 l4">
+                        <div class="student-card">
+                            <h4><b>${student.name}</b></h4>
+                            
+                            <div class="grade-box">
+                                <div class="w3-row">
+                                    <div class="w3-col s4">
+                                        <small><b>P1</b></small><br>
+                                        <span>${student.p1}</span>
+                                    </div>
+                                    <div class="w3-col s4">
+                                        <small><b>P2</b></small><br>
+                                        <span>${student.p2}</span>
+                                    </div>
+                                    <div class="w3-col s4">
+                                        <small><b>P3</b></small><br>
+                                        <span>${student.p3}</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="w3-margin-top">
+                                    <div class="w3-row">
+                                        <div class="w3-col s6">
+                                            <small><b>Average</b></small><br>
+                                            <span>${average}</span>
+                                        </div>
+                                        <div class="w3-col s6">
+                                            <small><b>Grade</b></small><br>
+                                            <span><b>${grade}</b></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="w3-margin-top">
+                                        ${passed ? 
+                                            '<span class="passed"><b>PASSED</b></span>' : 
+                                            '<span class="failed"><b>FAILED</b></span>'
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML += card;
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'LoginPortal.html';
+        }
+
+        // Initialize page
+        function initPage() {
+            // Check login
+            const user = checkLogin();
+            if (!user) return;
+            
+            // Display teacher name
+            document.getElementById('teacherName').textContent = 'Welcome, ' + user.username;
+            
+            // Display total student count
+            document.getElementById('totalStudents').textContent = defaultStudents.length;
+            
+            // Display students
+            displayStudents();
+        }
+
+        // Start everything when page loads
+        document.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>

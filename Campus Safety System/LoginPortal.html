@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CAMPUS SAFETY SYSTEM</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #FFB22D, #FF3737);
+    color: #000;
+  }
+
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border: 2px solid #FFB22D;
+    box-shadow: 0 0px 2px rgb(17, 17, 17);
+    background: linear-gradient(to bottom, #FFB22D, #ff7f50);
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .titles-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-weight: bold;
+  }
+
+
+  .main-title {
+    font-weight: bold;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    color: #ffc402;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    color: #ffc402;
+    margin: 0;
+    line-height: 1.4;
+    margin-top: 5px;
+  }
+
+
+  .login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+    background: transparent;
+  }
+
+  .login-box {
+    background: transparent;
+    padding: 30px;
+    border-radius: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    max-width: 90%;
+    font-weight: bold;
+  }
+
+
+  .login-box h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+
+  .custom-input {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    font-size: 14px;
+  }
+
+ 
+  .custom-input::placeholder {
+    color: #bbb;
+  }
+
+
+  .form-group {
+    margin-top: 15px;
+  }
+
+
+  .button-checkbox-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+  }
+
+
+  .button-center {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px;
+  }
+
+  .login-btn {
+    height: 40px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 45%; 
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+    display: inline-block;
+  }
+
+  .login-btn:hover {
+    background-color: white;
+    color: black;
+  }
+
+
+  .remember-label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+
+
+<div class="header-container">
+  <img src="assets/CNHS LOGO.png.png" alt="Logo" class="logo" />
+  <div class="titles-container">
+    <div class="main-title">CAMPUS SAFETY SYSTEM</div>
+    <div class="subtitle">
+      INTEGRATED WITH <span style="color:red;">EMERGENCY ALARM</span> AND <span style="color:rgb(238, 255, 0);">INCIDENT REPORTS</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="login-form">
+  <div class="login-box">
+    <h2>Login</h2>
+    <form>
+      <div class="form-group">
+        <label for="username" style="color:#fff;">USERNAME:</label>
+        <input class="custom-input" type="text" id="username" placeholder="Enter Username" />
+      </div>
+      <div class="form-group">
+        <label for="password" style="color:#fff;">PASSWORD:</label>
+        <input class="custom-input" type="password" id="password" placeholder="Enter Password" />
+      </div>
+
+
+      <div class="button-checkbox-container">
+        <label class="remember-label" style="margin: 0;">
+          <input type="checkbox" style="margin-right:8px;"/> Remember Me
+        </label>
+      </div>
+
+
+      <div class="button-center">
+        <button class="login-btn" type="submit">LOGIN</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
