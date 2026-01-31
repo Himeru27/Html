@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CNHS Safety Portal - Admin</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fef3e4;
+  margin: 0;
+}
+.header {
+  background-color: #ff7f50;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+}
+.logo {
+  width: 60px;
+  height: 60px;
+}
+.header-text {
+  margin-left: 15px;
+  color: white;
+}
+.header-title {
+  font-weight: bold;
+  font-size: 20px;
+}
+.admin-info {
+  background-color: #ffe4b2;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+.admin-avatar {
+  width: 50px;
+  height: 50px;
+  background-color: #ffe4b2;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+.admin-details {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+}
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 20px;
+}
+
+.nav-buttons .btn {
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 10px;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.nav-buttons .btn::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  bottom: 0;
+  left: 0;
+  background: #343a40;
+  transition: width 0.3s ease;
+}
+.nav-buttons .btn:hover::after {
+  width: 100%;
+}
+.content {
+  padding: 20px;
+}
+
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+.student-table thead {
+  background-color: #dee2e6;
+}
+.student-table th, .student-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-size: 12px;
+}
+.student-table th {
+  font-weight: bold;
+  background-color: #343a40;
+  color: white;
+}
+.nav-arrows {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+.nav-arrows i {
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.action-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px;
+}
+</style>
+</head>
+<body>
+
+
+<div class="header">
+  <div class="header-left d-flex align-items-center">
+    <img src="/assets/CNHS LOGO.png.png" alt="Logo" class="logo"/>
+    <div class="ms-3">
+      <div class="header-title">CNHS SAFETY PORTAL</div>
+      <div style="font-size: 12px;">INTEGRATED WITH EMERGENCY ALARM AND INCIDENT REPORTS</div>
+    </div>
+  </div>
+  <div class="admin-info d-flex align-items-center">
+    <div class="admin-avatar d-flex justify-content-center align-items-center">
+      <i class="fas fa-user"></i>
+    </div>
+    <div class="admin-details me-3">
+      <strong>ADMIN NAME</strong><br/>
+      ROLE TITLE<br/>
+      ID: 012345678
+    </div>
+    <button class="btn btn-danger btn-sm">LOGOUT</button>
+  </div>
+</div>
+
+
+<div class="d-flex justify-content-center nav-buttons">
+  <button class="btn btn-sm">HOME</button>
+  <button class="btn btn-sm">REPORTS & REQUESTS</button>
+  <button class="btn btn-sm">HISTORY</button>
+  <button class="btn btn-sm">PROFILE</button>
+</div>
+
+
+<div class="content">
+
+  <div class="d-flex justify-content-between mb-3 flex-wrap align-items-center">
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-success btn-sm">ADD USER</button>
+      
+  
+      <div class="dropdown">
+        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="sectionDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #ff7f50; border: none; border-radius: 4px; padding: 8px 16px; font-weight: bold; font-family: Arial, sans-serif;">
+          SELECT SECTION
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="sectionDropdown" style="background-color: #fff; border-radius: 8px; border: 1px solid #ccc;">
+          <li><a class="dropdown-item" href="#" style="color: #fff; background-color: #ff7f50; font-weight: bold;">⚡️ FILTER BY</a></li>
+          <li><a class="dropdown-item" href="#" style="background-color: #ffe4b2; font-weight: bold;">ICT</a></li>
+          <li><a class="dropdown-item" href="#" style="background-color: #ffe4b2; font-weight: bold;">ABM</a></li>
+          <li><a class="dropdown-item" href="#" style="background-color: #ffe4b2; font-weight: bold;">STEM</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="input-group" style="max-width: 300px;">
+      <input type="text" class="form-control" placeholder="Search..." />
+      <button class="btn btn-outline-secondary" type="button">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+  
+  
+  <div class="d-flex align-items-center mb-2" style="justify-content: space-between;">
+    <i class="fas fa-chevron-left" style="font-size: 20px; cursor: pointer;"></i>
+    <div style="text-align: center; flex-grow: 1;">STUDENT TABLE</div>
+    <i class="fas fa-chevron-right" style="font-size: 20px; cursor: pointer;"></i>
+  </div>
+  
+
+  <table class="student-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>ROLE</th>
+        <th>FIRST NAME</th>
+        <th>LAST NAME</th>
+        <th>INITIAL</th>
+        <th>SECTION</th>
+        <th>GRADE LEVEL</th>
+        <th>GENDER</th>
+        <th>ACTIONS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Faculty</td>
+        <td>John</td>
+        <td>Doe</td>
+        <td>J</td>
+        <td>A</td>
+        <td>12</td>
+        <td>Male</td>
+        <td class="actions">
+          <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+          <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Faculty</td>
+        <td>John</td>
+        <td>Doe</td>
+        <td>J</td>
+        <td>A</td>
+        <td>12</td>
+        <td>Male</td>
+        <td class="actions">
+          <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+          <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Faculty</td>
+        <td>John</td>
+        <td>Doe</td>
+        <td>J</td>
+        <td>A</td>
+        <td>12</td>
+        <td>Male</td>
+        <td class="actions">
+          <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+          <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Faculty</td>
+        <td>John</td>
+        <td>Doe</td>
+        <td>J</td>
+        <td>A</td>
+        <td>12</td>
+        <td>Male</td>
+        <td class="actions">
+          <button class="action-btn" title="Edit"><i class="fas fa-edit"></i></button>
+          <button class="action-btn" title="Delete"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

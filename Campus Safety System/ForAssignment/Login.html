@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHINMA SIS - Login</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(rgba(245, 245, 245, 0.151), rgba(245, 245, 245, 0.9)),
+            url('https://storage.googleapis.com/bukas-website-v3-prd/website_v3/data_sync/partner/cover_photo/phinma_29.jpg');
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-box {
+            background: white;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .header {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            padding: 30px;
+            color: white;
+            text-align: center;
+        }
+        .admin-bg { background: linear-gradient(135deg, #ff416c, #ff4b2b); }
+        .teacher-bg { background: linear-gradient(135deg, #2196F3, #21CBF3); }
+        .student-bg { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <a href="LoginPortal.html" class="w3-button w3-round back-btn w3-blue">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+    
+    <div class="login-box w3-card-4">
+        <div id="header" class="header"></div>
+        
+        <form id="loginForm" class="w3-container w3-padding-24">
+            <div class="w3-section">
+                <label>Username:</label>
+                <input class="w3-input w3-border w3-round" 
+                       type="text" 
+                       id="username" 
+                       placeholder="Enter your username" 
+                       required>
+            </div>
+            
+            <div class="w3-section">
+                <button type="submit" class="w3-button w3-block w3-round" id="loginBtn">
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+
+        const validUsers = {
+            admin: ['admin'],
+            teacher: ['Mrs. Taypin'],
+            student: ['Jhoshua']
+        };
+
+
+        const role = localStorage.getItem('selectedRole');
+        
+
+        if (!role || !['admin', 'teacher', 'student'].includes(role)) {
+            window.location.href = 'LoginPortal.html';
+        }
+        
+
+        function setupPage() {
+            const header = document.getElementById('header');
+            const loginBtn = document.getElementById('loginBtn');
+            
+
+            if (role === 'admin') {
+                header.className += ' admin-bg';
+                loginBtn.className += ' w3-red';
+                header.innerHTML = '<i class="fas fa-user-cog fa-3x"></i><h2>Admin Login</h2>';
+            } else if (role === 'teacher') {
+                header.className += ' teacher-bg';
+                loginBtn.className += ' w3-blue';
+                header.innerHTML = '<i class="fas fa-chalkboard-teacher fa-3x"></i><h2>Teacher Login</h2>';
+            } else {
+                header.className += ' student-bg';
+                loginBtn.className += ' w3-green';
+                header.innerHTML = '<i class="fas fa-user-graduate fa-3x"></i><h2>Student Login</h2>';
+            }
+            
+
+            document.getElementById('loginForm').onsubmit = function(event) {
+                event.preventDefault(); 
+                
+                const username = document.getElementById('username').value.trim();
+                
+
+                if (validUsers[role].includes(username)) {
+
+                    const user = {
+                        name: username,
+                        role: role
+                    };
+                    
+
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+
+                    window.location.href = role + '.html';
+                } else {
+                    alert('Invalid username for this role. Please try again!');
+                }
+            };
+        }
+        
+
+        document.addEventListener('DOMContentLoaded', setupPage);
+    </script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNHS Safety Portal - Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #F5E6D3;
+            min-height: 100vh;
+        }
+
+        .header {
+            padding: 1rem;
+            background: #F5E6D3;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #FF7F50;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            flex: 1;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-inner {
+            width: 42px;
+            height: 42px;
+            background: #1e3a8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fbbf24;
+        }
+
+        .logo-icon {
+            width: 20px;
+            height: 14px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            font-weight: 900;
+        }
+
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-info {
+            background: #FFEAB0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .user-info-top {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            background: #FF9F4A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-avatar-inner {
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .logout-btn {
+            background: #FF6B6B;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-size: 0.875rem;
+            font-weight: bold;
+            padding: 0.75rem 0;
+            color: black;
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .nav-link.active {
+            border-bottom-color: #FF7F50;
+        }
+
+        .content {
+            padding: 2rem 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            background: linear-gradient(to bottom, #F4D66A, #F0D060);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .profile-inner {
+            background: linear-gradient(to bottom, #FFF5D6, #FFEEB8);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .profile-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: #FF9F4A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .profile-avatar-inner {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .profile-edit {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #FF9F4A;
+            font-weight: bold;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .profile-edit:hover {
+            color: #FF8C42;
+        }
+
+        .profile-info {
+            color: #FF7F50;
+            font-weight: bold;
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .change-password-btn {
+            background: #FF8C42;
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .change-password-btn:hover {
+            background: #FF7F30;
+        }
+
+        .save-btn {
+            background: linear-gradient(to bottom, #FF8C42, #FF7030);
+            color: white;
+            font-weight: bold;
+            padding: 0.875rem 2.5rem;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .save-btn:hover {
+            background: linear-gradient(to bottom, #FF7F30, #FF6020);
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            border: 4px solid #FF9F5A;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .modal-icon {
+            width: 40px;
+            height: 40px;
+            background: #FF9F4A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #FF6B6B;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 0.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .password-label {
+            display: block;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .password-input-wrapper {
+            position: relative;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 0.75rem 3rem 0.75rem 1rem;
+            font-size: 0.875rem;
+            border: 3px solid #FF9F5A;
+            border-radius: 0.5rem;
+        }
+
+        .eye-btn {
+            position: absolute;
+            right: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .password-submit {
+            background: black;
+            color: white;
+            font-weight: bold;
+            padding: 0.875rem 3rem;
+            font-size: 1rem;
+            border-radius: 0.75rem;
+            border: 3px solid #FF9F5A;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto 0;
+        }
+
+        .password-submit:hover {
+            background: #1f2937;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div class="header-logo">
+                <div class="logo-circle">
+                    <div class="logo-inner">
+                        <div class="logo-icon"></div>
+                    </div>
+                </div>
+                <h1 class="header-title">CNHS SAFETY PORTAL</h1>
+            </div>
+
+            <div class="user-info-container">
+                <div class="user-info">
+                    <div class="user-info-top">
+                        <div class="user-avatar">
+                            <div class="user-avatar-inner"></div>
+                        </div>
+                        <div>
+                            <div style="font-weight: bold;">STUDENT NAME</div>
+                            <div style="color: #FF7F50; font-weight: bold;">SECTION/GRADE LVL</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.625rem;">
+                        <span style="font-weight: bold;">ID:</span> 01234567B
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="window.location.href='login.html'">LOGOUT</button>
+            </div>
+        </div>
+
+        <div class="nav">
+            <div class="nav-links">
+                <a href="AdminHome.html" class="nav-link">HOME</a>
+                <a href="report-incident.html" class="nav-link">REPORT INCIDENT</a>
+                <a href="profile.html" class="nav-link active">PROFILE</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="profile-card">
+            <div class="profile-inner">
+                <div class="profile-top">
+                    <div class="profile-avatar">
+                        <div class="profile-avatar-inner"></div>
+                    </div>
+                    <div>
+                        <button class="profile-edit">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            CHANGE NAME
+                        </button>
+                        <div class="profile-info">
+                            <div>SECTION</div>
+                            <div>GRADE LEVEL</div>
+                            <div>BATCH: 2024-2025</div>
+                            <div>GENDER: MALE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="change-password-btn" onclick="openPasswordModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        CHANGE PASSWORD
+                    </button>
+
+                    <button class="save-btn">SAVE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePasswordModal()">×</button>
+            
+            <div class="modal-header">
+                <div class="modal-icon">!</div>
+                <h2 class="modal-title">CHANGE PASSWORD</h2>
+            </div>
+
+            <form onsubmit="changePassword(event)">
+                <div class="password-group">
+                    <label class="password-label">CURRENT PASSWORD</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" class="password-input" id="currentPassword" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('currentPassword')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="password-group">
+                    <label class="password-label">NEW PASSWORD</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" class="password-input" id="newPassword" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('newPassword')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="password-group">
+                    <label class="password-label">CONFIRM NEW PASSWORD</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" class="password-input" id="confirmPassword" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('confirmPassword')">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="password-submit">CHANGE PASSWORD</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openPasswordModal() {
+            document.getElementById('passwordModal').classList.add('open');
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.remove('open');
+        }
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        function changePassword(event) {
+            event.preventDefault();
+            
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (newPass !== confirm) {
+                alert('New passwords do not match!');
+                return;
+            }
+
+            console.log('Password change requested');
+            alert('Password changed successfully!');
+            closePasswordModal();
+        }
+
+
+        document.getElementById('passwordModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePasswordModal();
+            }
+        });
+    </script>
+</body>
+</html>

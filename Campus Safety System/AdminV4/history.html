@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNHS Safety Portal - History</title>
+<style> 
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap');
+/*  Framework ni sya */
+
+/*  
+
+Ayaw na hilabti guys except lang sa reports na part kay medyo na hiwi ang button og contents niya kapoy nag adjust HAHAHAHA
+
+~ PS: SHIMZ
+
+*/
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Oswald', sans-serif;
+    background: #f5ebe0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+ 
+  .header {
+    background: #F07A20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 28px;
+    min-height: 90px;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #d4a030;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .logo-circle img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+  }
+  .header-title {
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 2px;
+    text-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+  }
+  .header-right {
+    background: #fdf0d5;
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .admin-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f0c060;
+    border: 3px solid #e8a830;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-avatar svg {
+    width: 26px;
+    height: 26px;
+    fill: #c07020;
+  }
+  .admin-info {
+    text-align: left;
+  }
+  .admin-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #222;
+    text-transform: uppercase;
+  }
+  .admin-role {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #F07A20;
+    text-transform: uppercase;
+  }
+  .admin-id {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+  }
+  .logout-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .logout-btn:hover { background: #c62a36; }
+
+  .nav {
+    display: flex;
+    gap: 0;
+    padding: 0 28px;
+    background: #fff;
+    border-bottom: 1px solid #e8ddd0;
+  }
+  .nav-item {
+    padding: 14px 32px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 0.5px;
+    border: none;
+    background: none;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #F07A20;
+    border-radius: 2px 2px 0 0;
+  }
+  .nav-item:hover { color: #F07A20; }
+
+ 
+
+
+  .history-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px;
+    flex-wrap: wrap;
+  }
+  .date-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .date-input-wrap label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    color: #888;
+    font-weight: 600;
+  }
+  .date-input {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    background: #fff;
+    cursor: pointer;
+  }
+  .history-title-bar {
+    background: #fde8c8;
+    border-radius: 8px;
+    padding: 9px 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333;
+  }
+  .history-title-bar .excl-icon {
+    width: 22px;
+    height: 22px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 13px;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 2px solid #222;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-left: auto;
+  }
+  .search-label {
+    background: #222;
+    color: #fff;
+    padding: 10px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+  .search-box input {
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    width: 160px;
+  }
+  .search-icon {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+  }
+
+  .history-card {
+    background: #fde8c8;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 0 28px 12px;
+    transition: transform 0.2s;
+  }
+  .history-card:hover {
+    transform: translateY(-2px);
+  }
+  .history-card-badge {
+    display: inline-block;
+    background: #e8573b;
+    color: #fff;
+    border-radius: 6px;
+    padding: 3px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .history-card-badge.medicine { background: #F07A20; }
+  .history-card-badge.incident { background: #c0392b; }
+  .history-card-text {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: #333;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .history-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .view-details-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .view-details-btn:hover { background: #d96a1a; }
+  .delete-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .delete-btn:hover { background: #d04530; }
+  .history-card-right { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+  }
+  .date-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    color: #999;
+  }
+
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.active { 
+    display: flex;
+    opacity: 1;
+  }
+  
+  .details-modal {
+    background: #fef8f0;
+    border: 3px solid #F07A20;
+    border-radius: 16px;
+    padding: 28px 32px;
+    width: 500px;
+    max-width: 90%;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.active .details-modal {
+    transform: scale(1);
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .modal-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .modal-title .excl-icon {
+    width: 24px;
+    height: 24px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 14px;
+  }
+  .modal-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #222;
+  }
+  .modal-exit-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .modal-exit-btn:hover { background: #c62a36; }
+  .modal-content {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .detail-row {
+    display: flex;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0ebe3;
+  }
+  .detail-row:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  .detail-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #F07A20;
+    min-width: 120px;
+  }
+  .detail-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    color: #333;
+    flex: 1;
+  }
+
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #333;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-circle">
+      <img src="/assets/CNHS LOGO.png.png" alt="CNHS Logo">
+    </div>
+    <div class="header-title">CNHS SAFETY PORTAL</div>
+  </div>
+  <div class="header-right">
+    <div class="admin-avatar">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <div class="admin-info">
+      <div class="admin-name">Admin Name</div>
+      <div class="admin-role">Role Title</div>
+      <div class="admin-id">ID: 012345678</div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+
+<div class="nav"> 
+  <a href="home.html" class="nav-item">Home</a>
+  <a href="reports.html" class="nav-item">Reports & Requests</a> 
+  <a href="history.html" class="nav-item active">History</a>
+  <a href="profile.html" class="nav-item">Profile</a>
+</div>
+
+<div class="history-controls">
+  <div class="date-input-wrap">
+    <label>Specific date:</label>
+    <input type="date" class="date-input" id="date-filter" onchange="filterByDate()">
+  </div>
+  <div class="history-title-bar">
+    <div class="excl-icon">!</div>
+    Removed & Declined Requests History
+  </div>
+  <div class="search-box">
+    <div class="search-label">Search</div>
+    <input type="text" id="search-input" placeholder="" oninput="searchHistory()">
+    <div class="search-icon" onclick="searchHistory()">🔍</div>
+  </div>
+</div>
+
+<div id="history-container">
+</div>
+
+
+<div class="modal-overlay" id="details-modal">
+  <div class="details-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        <div class="excl-icon">!</div>
+        <span id="modal-title-text">DETAILS</span>
+      </div>
+      <button class="modal-exit-btn" onclick="closeDetailsModal()">EXIT</button>
+    </div>
+    <div class="modal-content" id="modal-content">
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let historyItems = [
+  {
+    id: 1,
+    type: 'emergency',
+    time: 'Today 8:21 AM',
+    student: 'Gulane',
+    description: 'Student Gulane Request a Emergency Assistance in B..',
+    date: '01 / 31 / 2026',
+    fullDate: '2026-01-31',
+    details: {
+      student: 'Pedro Gulane',
+      type: 'Medical Emergency',
+      location: 'Building C',
+      room: '305',
+      description: 'Student collapsed during PE class',
+      action: 'Declined',
+      reason: 'False alarm - student was just dehydrated'
+    }
+  },
+  {
+    id: 2,
+    type: 'medicine',
+    time: 'Today 10:05 AM',
+    student: 'Wabe',
+    description: 'Student Wabe Request for Paracetamol Medicine',
+    date: '01 / 31 / 2026',
+    fullDate: '2026-01-31',
+    details: {
+      student: 'John Wabe',
+      medicine: 'Paracetamol',
+      dosage: '500mg',
+      symptoms: 'Headache and fever',
+      action: 'Approved',
+      givenBy: 'Nurse Maria Santos',
+      timeGiven: '10:15 AM'
+    }
+  },
+  {
+    id: 3,
+    type: 'medicine',
+    time: 'Today 9:30 AM',
+    student: 'Guimba',
+    description: 'Student Guimba Request for Decolgen Medicine',
+    date: '01 / 31 / 2026',
+    fullDate: '2026-01-31',
+    details: {
+      student: 'Maria Guimba',
+      medicine: 'Decolgen',
+      dosage: '1 tablet',
+      symptoms: 'Cold and cough',
+      action: 'Declined',
+      reason: 'No prescription from parent/guardian'
+    }
+  },
+  {
+    id: 4,
+    type: 'incident',
+    time: 'Yesterday 2:15 PM',
+    student: 'Cruz',
+    description: 'Student Cruz Reported a Vandalism Incident in Building A',
+    date: '01 / 30 / 2026',
+    fullDate: '2026-01-30',
+    details: {
+      reportedBy: 'Carlos Cruz',
+      type: 'Vandalism',
+      location: 'Building A',
+      room: '105',
+      description: 'Graffiti found on classroom walls',
+      action: 'Resolved',
+      investigatedBy: 'Security Team',
+      outcome: 'Culprit identified and disciplinary action taken'
+    }
+  }
+];
+
+let filteredItems = [...historyItems];
+
+function init() {
+  renderHistory();
+}
+
+function renderHistory() {
+  const container = document.getElementById('history-container');
+  if (filteredItems.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">No history items found</div>';
+    return;
+  }
+  
+  container.innerHTML = filteredItems.map(item => `
+    <div class="history-card" id="history-${item.id}">
+      <div class="history-card-badge ${item.type}">${item.type}</div>
+      <div class="history-card-text">${item.time} : ${item.description}</div>
+      <div class="history-card-actions">
+        <button class="view-details-btn" onclick="viewDetails(${item.id})">View Details</button>
+        <div class="history-card-right">
+          <span class="date-text">${item.date}</span>
+          <button class="delete-btn" onclick="deleteHistory(${item.id})">Delete</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function viewDetails(id) {
+  const item = historyItems.find(i => i.id === id);
+  if (!item) return;
+  
+  const modal = document.getElementById('details-modal');
+  const titleText = document.getElementById('modal-title-text');
+  const content = document.getElementById('modal-content');
+  
+  titleText.textContent = `${item.type.toUpperCase()} DETAILS`;
+  
+  let detailsHtml = '';
+  Object.entries(item.details).forEach(([key, value]) => {
+    const label = key.replace(/([A-Z])/g, ' $1').toUpperCase();
+    detailsHtml += `
+      <div class="detail-row">
+        <div class="detail-label">${label}:</div>
+        <div class="detail-value">${value}</div>
+      </div>
+    `;
+  });
+  
+  content.innerHTML = detailsHtml;
+  modal.classList.add('active');
+}
+
+function closeDetailsModal() {
+  document.getElementById('details-modal').classList.remove('active');
+}
+
+function deleteHistory(id) {
+  const element = document.getElementById(`history-${id}`);
+  if (element) {
+    element.style.transition = 'all 0.3s';
+    element.style.transform = 'translateX(100%)';
+    element.style.opacity = '0';
+    
+    setTimeout(() => {
+      const index = historyItems.findIndex(i => i.id === id);
+      if (index !== -1) {
+        historyItems.splice(index, 1);
+        filteredItems = historyItems.filter(item => {
+          const dateFilter = document.getElementById('date-filter').value;
+          const searchQuery = document.getElementById('search-input').value.toLowerCase();
+          
+          let matches = true;
+          if (dateFilter && item.fullDate !== dateFilter) matches = false;
+          if (searchQuery && !item.description.toLowerCase().includes(searchQuery)) matches = false;
+          
+          return matches;
+        });
+        renderHistory();
+      }
+      showToast('Record deleted.');
+    }, 300);
+  }
+}
+
+function filterByDate() {
+  const dateValue = document.getElementById('date-filter').value;
+  if (!dateValue) {
+    filteredItems = [...historyItems];
+  } else {
+    filteredItems = historyItems.filter(item => item.fullDate === dateValue);
+  }
+  renderHistory();
+}
+
+function searchHistory() {
+  const query = document.getElementById('search-input').value.toLowerCase();
+  if (!query) {
+    filteredItems = [...historyItems];
+  } else {
+    filteredItems = historyItems.filter(item => 
+      item.description.toLowerCase().includes(query) ||
+      item.student.toLowerCase().includes(query) ||
+      item.type.toLowerCase().includes(query)
+    );
+  }
+  renderHistory();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function logout() {
+  if (confirm('Are you sure you want to logout?')) { //kapoy nag himog UI hahahaha paki edit nalang ko dri na part
+    localStorage.removeItem('cnhs_user');
+    sessionStorage.removeItem('cnhs_user');
+    window.location.href = 'login.html';
+  }
+}
+
+
+document.getElementById('details-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeDetailsModal();
+});
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>

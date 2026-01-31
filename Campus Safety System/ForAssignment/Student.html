@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            background: url('https://storage.googleapis.com/bukas-website-v3-prd/website_v3/data_sync/partner/cover_photo/phinma_29.jpg'); 
+            background-size: cover; 
+            min-height: 100vh; 
+        }
+        .dashboard { 
+            background: white; 
+            border-radius: 10px; 
+            max-width: 1200px; 
+            margin: 20px auto; 
+        }
+        .header { 
+            background: linear-gradient(135deg, #4CAF50, #2E7D32); 
+            color: white; 
+            border-radius: 10px 10px 0 0; 
+        }
+        .passed { 
+            color: green; 
+            font-weight: bold; 
+        }
+        .failed { 
+            color: red; 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+    <div class="w3-container w3-padding">
+        <div class="dashboard w3-card-4">
+            <div class="header w3-container w3-padding-24">
+                <div class="w3-row">
+                    <div class="w3-col m8">
+                        <h2>Student Portal</h2>
+                        <p id="studentName">Loading...</p>
+                    </div>
+                    <div class="w3-col m4 w3-right-align">
+                        <button class="w3-button w3-round w3-white" onclick="logout()">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="w3-container w3-padding-24">
+                <h3>My Grades - First Semester</h3>
+                
+                <table class="w3-table w3-striped w3-border">
+                    <thead>
+                        <tr class="w3-green">
+                            <th>Subject</th>
+                            <th>P1</th>
+                            <th>P2</th>
+                            <th>P3</th>
+                            <th>Average</th>
+                            <th>Grade</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grades"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        
+
+    function accessDashboard(user) {
+        if (user.role === "admin") {
+            alert('Access denied. Student only.');
+            window.location.href = 'LoginPortal.html';
+        } else if (user.role === "teacher") {
+            alert('Access denied. Student only.');
+            window.location.href = 'LoginPortal.html';
+        } else if (user.role === "student") {
+            document.getElementById('studentName').textContent = 'Welcome Jhoshua! You can see your own grades only.';
+        } else {
+            alert('Access denied. Please login first.');
+            window.location.href = 'LoginPortal.html';
+        }
+    }
+        
+
+        accessDashboard(user);
+        
+
+        const myGrades = [
+            { subject: 'Math', p1: 85, p2: 88, p3: 90 },
+            { subject: 'Science', p1: 78, p2: 80, p3: 82 },
+            { subject: 'English', p1: 90, p2: 92, p3: 94 },
+            { subject: 'History', p1: 84, p2: 86, p3: 88 },
+            { subject: 'Programming', p1: 88, p2: 89, p3: 91 }
+        ];
+        
+
+        function getGrade(score) {
+            if (score >= 98) return '1.00';
+            if (score >= 95) return '1.25';
+            if (score >= 92) return '1.50';
+            if (score >= 89) return '1.75';
+            if (score >= 86) return '2.00';
+            if (score >= 83) return '2.25';
+            if (score >= 80) return '2.50';
+            if (score >= 77) return '2.75';
+            if (score >= 75) return '3.00';
+            return '5.00';
+        }
+        
+
+        function showGrades() {
+            const table = document.getElementById('grades');
+            table.innerHTML = '';
+            
+            for (let i = 0; i < myGrades.length; i++) {
+                const grade = myGrades[i];
+                const avg = Math.round((grade.p1 + grade.p2 + grade.p3) / 3);
+                const finalGrade = getGrade(avg);
+                const passed = avg >= 75 ? 'PASSED' : 'FAILED';
+                const colorClass = passed === 'PASSED' ? 'passed' : 'failed';
+                
+                const row = `
+                    <tr>
+                        <td>${grade.subject}</td>
+                        <td>${grade.p1}</td>
+                        <td>${grade.p2}</td>
+                        <td>${grade.p3}</td>
+                        <td>${avg}</td>
+                        <td class="${colorClass}">${finalGrade}</td>
+                        <td class="${colorClass}">${passed}</td>
+                    </tr>
+                `;
+                table.innerHTML += row;
+            }
+        }
+        
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'LoginPortal.html';
+        }
+        
+
+        showGrades();
+    </script>
+</body>
+</html>

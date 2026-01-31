@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNHS Safety Portal - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #F5E6D3;
+            min-height: 100vh;
+        }
+
+        .header {
+            padding: 1rem;
+            background: #F5E6D3;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #FF7F50;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            flex: 1;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-inner {
+            width: 42px;
+            height: 42px;
+            background: #1e3a8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fbbf24;
+        }
+
+        .logo-icon {
+            width: 20px;
+            height: 14px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            font-weight: 900;
+        }
+
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-info {
+            background: #FFEAB0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .user-info-top {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            background: #FF9F4A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-avatar-inner {
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .user-section {
+            color: #FF7F50;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #FF6B6B;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #ff5555;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-size: 0.875rem;
+            font-weight: bold;
+            padding: 0.75rem 0;
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .nav-link.active {
+            border-bottom-color: #FF7F50;
+        }
+
+        .nav-link:hover {
+            color: #FF7F50;
+        }
+
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            background: #dc2626;
+            color: white;
+            font-size: 0.625rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 1rem;
+        }
+
+        .emergency-alert {
+            background: linear-gradient(to right, #FF9F5A, #FF8C4A, #FF9F5A);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .alert-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #FFE6B3, #FFF0CC);
+            padding: 0.25rem 1.5rem;
+            border-radius: 999px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .alert-title .emergency {
+            color: #dc2626;
+        }
+
+        .alert-title .alert-text {
+            color: #8B4513;
+        }
+
+        .alert-message {
+            color: white;
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: #FFEAB0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .quick-report-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 999px;
+            font-weight: bold;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+        }
+
+        .btn-icon {
+            background: white;
+            border-radius: 0.375rem;
+            padding: 0.375rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .medical-emergency {
+            background: #FF9F4A;
+            color: white;
+        }
+
+        .medical-emergency:hover {
+            background: #FF8C42;
+        }
+
+        .alert-clinic, .request-medicine {
+            background: #FFD166;
+        }
+
+        .alert-clinic:hover, .request-medicine:hover {
+            background: #FFC947;
+        }
+
+        .visual-map-card {
+            background: #90EE90;
+        }
+
+        .visual-map-title {
+            text-align: center;
+        }
+
+        .map-preview {
+            width: 100%;
+            background: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 3px solid #4A9D4A;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .map-preview:hover {
+            border-color: #3A8D3A;
+        }
+
+        .map-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .activity-item {
+            border-bottom: 1px solid #d1d5db;
+            padding-bottom: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-text .highlight {
+            color: #dc2626;
+        }
+
+        .activity-text .bold {
+            font-weight: bold;
+        }
+
+        .activity-date {
+            font-size: 0.625rem;
+            color: #6b7280;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+
+        /* Notification Panel */
+        .notification-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .notification-panel.open {
+            right: 0;
+        }
+
+        .notification-header {
+            background: #FF7F50;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .notification-header h3 {
+            font-size: 1.25rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem;
+        }
+
+        .notification-time {
+            font-weight: bold;
+            color: #6B4423;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .notification-text {
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        .overlay.open {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 1rem;
+            }
+            
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .notification-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div class="header-logo">
+                <div class="logo-circle">
+                    <div class="logo-inner">
+                        <div class="logo-icon"></div>
+                        <img src="/assets/CNHS LOGO.png.png" alt="Logo" class="logo-circle" />
+                    </div>
+                </div>
+                
+                <h1 class="header-title">CNHS SAFETY PORTAL</h1>
+            </div>
+
+            <div class="user-info-container">
+                <div class="user-info">
+                    <div class="user-info-top">
+                        <div class="user-avatar">
+                            <div class="user-avatar-inner"></div>
+                        </div>
+                        <div>
+                            <div class="user-name">STUDENT NAME</div>
+                            <div class="user-section">SECTION/GRADE LVL</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.625rem;">
+                        <span style="font-weight: bold;">ID:</span> 01234567B
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="logout()">LOGOUT</button>
+            </div>
+        </div>
+
+        <div class="nav">
+            <div class="nav-links">
+                <a href="home.html" class="nav-link active">HOME</a>
+                <a href="report-incident.html" class="nav-link">REPORT INCIDENT</a>
+                <a href="profile.html" class="nav-link">PROFILE</a>
+            </div>
+            <button class="notification-btn" onclick="toggleNotifications()">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="#FF7F50" stroke="#FF7F50" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <span class="notification-badge" id="notification-count">3</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="emergency-alert">
+            <div class="alert-title">
+                <span class="emergency">EMERGENCY</span> <span class="alert-text">ALERT!</span>
+            </div>
+            <p class="alert-message">
+                TODAY 9:30AM, A TROPICAL STORM INCOMING,<br>
+                PLEASE STAY INSIDE THE CLASSROOM
+            </p>
+        </div>
+
+        <div class="grid-3">
+            <div class="card">
+                <h3 class="card-title">QUICK REPORT</h3>
+                <button class="quick-report-btn medical-emergency">
+                    <div class="btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#dc2626">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </div>
+                    MEDICAL EMERGENCY
+                </button>
+                <button class="quick-report-btn alert-clinic" onclick="window.location.href='alert-clinic.html'">
+                    <div class="btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF7F50">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        </svg>
+                    </div>
+                    ALERT SCHOOL CLINIC
+                </button>
+                <button class="quick-report-btn request-medicine" onclick="window.location.href='request-medicine.html'">
+                    <div class="btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF7F50">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="12" y1="8" x2="12" y2="16" stroke="white" stroke-width="2"></line>
+                            <line x1="8" y1="12" x2="16" y2="12" stroke="white" stroke-width="2"></line>
+                        </svg>
+                    </div>
+                    REQUEST MEDICINE
+                </button>
+            </div>
+
+            <div class="card visual-map-card">
+                <h3 class="card-title visual-map-title">VISUAL MAP</h3>
+                <button class="map-preview" onclick="window.location.href='visual-map.html'">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600&h=400&fit=crop" alt="Campus Map">
+                </button>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">RECENT ACTIVITY</h3>
+                <div class="activity-item">
+                    <p class="activity-text">
+                        <span class="highlight">Today, 12:15 PM: 📞 Medicine Request:</span> Your request for <span class="bold">Biogesic</span> was approved.
+                    </p>
+                    <p class="activity-date">01/26/2026</p>
+                </div>
+                <div class="activity-item">
+                    <p class="activity-text">
+                        <span class="highlight">Today, 08:30 AM: 📢 Announcement:</span> Earthquake Drill scheduled for Friday, 2:00 PM.
+                    </p>
+                    <p class="activity-date">01/26/2026</p>
+                </div>
+                <div class="activity-item">
+                    <p class="activity-text">
+                        <span class="highlight">Yesterday, 03:45 PM: ✅ Incident Resolved:</span> Water leak in Building B repaired.
+                    </p>
+                    <p class="activity-date">01/25/2026</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div class="overlay" id="overlay" onclick="toggleNotifications()"></div>
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-btn" onclick="toggleNotifications()">×</button>
+        </div>
+        <div id="notificationList">
+            <div class="notification-item">
+                <div class="notification-time">TODAY 12:15 PM</div>
+                <p class="notification-text">
+                    📞 <strong>Medicine Request:</strong> Your request for <strong>Biogesic</strong> was approved. Please proceed to the clinic.
+                </p>
+            </div>
+            <div class="notification-item">
+                <div class="notification-time">TODAY 08:30 AM</div>
+                <p class="notification-text">
+                    📢 <strong>Announcement:</strong> Earthquake Drill scheduled for Friday, 2:00 PM.
+                </p>
+            </div>
+            <div class="notification-item">
+                <div class="notification-time">YESTERDAY 03:45 PM</div>
+                <p class="notification-text">
+                    ✅ <strong>Incident Resolved:</strong> The water leak in Building B has been repaired.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = 'login.html';
+        }
+
+        function toggleNotifications() {
+            const panel = document.getElementById('notificationPanel');
+            const overlay = document.getElementById('overlay');
+            
+            panel.classList.toggle('open');
+            overlay.classList.toggle('open');
+        }
+
+        function updateNotificationCount() {
+            const notifications = document.querySelectorAll('.notification-item');
+            document.getElementById('notification-count').textContent = notifications.length;
+        }
+
+        updateNotificationCount();
+    </script>
+</body>
+</html>

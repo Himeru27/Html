@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNHS Safety Portal - Profile</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap');
+  /* 
+  Akoa ng gipa format ning code para hinlo tan awon
+  wala pani back end tas basic functionality pa ang gi una nako kay lisodan kos pag replicate sa design sa figma :)
+
+  ~ PS: Shimz
+
+  
+  */ 
+
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Oswald', sans-serif;
+    background: #f5ebe0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    background: #F07A20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 28px;
+    min-height: 90px;
+  }
+  .header-left { display: flex; align-items: center; gap: 16px; }
+  .logo-circle {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #d4a030;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .logo-circle img { width: 70px; height: 70px; object-fit: contain; }
+  .header-title {
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 2px;
+    text-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+  }
+  .header-right {
+    background: #fdf0d5;
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .admin-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: #f0c060;
+    border: 3px solid #e8a830;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-avatar svg { width: 26px; height: 26px; fill: #c07020; }
+  .admin-info { text-align: left; }
+  .admin-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #222;
+    text-transform: uppercase;
+  }
+  .admin-role {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #F07A20;
+    text-transform: uppercase;
+  }
+  .admin-id {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+  }
+  .logout-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .logout-btn:hover { background: #c62a36; }
+
+
+  .nav {
+    display: flex;
+    gap: 0;
+    padding: 0 28px;
+    background: #fff;
+    border-bottom: 1px solid #e8ddd0;
+  }
+  .nav-item {
+    padding: 14px 32px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 0.5px;
+    border: none;
+    background: none;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #F07A20;
+    border-radius: 2px 2px 0 0;
+  }
+  .nav-item:hover { color: #F07A20; }
+
+
+  .profile-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 180px);
+    padding: 28px;
+  }
+  .profile-card {
+    background: #f5dfa0;
+    border-radius: 20px;
+    padding: 40px 50px;
+    width: 500px;
+    text-align: center;
+    border: 4px solid #e8c840;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #f0c060;
+    border: 5px solid #e8a830;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .profile-avatar:hover {
+    transform: scale(1.05);
+  }
+  .profile-avatar svg {
+    width: 60px;
+    height: 60px;
+    fill: #c07020;
+  }
+  .profile-fields {
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 26px;
+  }
+  .profile-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .profile-field .edit-icon {
+    width: 22px;
+    height: 22px;
+    background: #F07A20;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .profile-field .edit-icon:hover {
+    background: #d96a1a;
+    transform: scale(1.1);
+  }
+  .profile-field .edit-icon svg { width: 14px; height: 14px; fill: #fff; }
+  .profile-field span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #F07A20;
+    text-transform: uppercase;
+  }
+  .profile-field input {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #F07A20;
+    text-transform: uppercase;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #F07A20;
+    outline: none;
+    padding: 2px 4px;
+  }
+  .change-pw-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto 22px;
+    transition: all 0.2s;
+  }
+  .change-pw-btn:hover { 
+    background: #d96a1a;
+    transform: translateY(-2px);
+  }
+  .change-pw-btn svg { width: 16px; height: 16px; fill: #fff; }
+  .save-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 36px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: all 0.2s;
+  }
+  .save-btn:hover { 
+    background: #d96a1a;
+    transform: translateY(-2px);
+  }
+
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.active { 
+    display: flex;
+    opacity: 1;
+  }
+
+
+  .change-password-modal {
+    background: #f5f5f5;
+    border: 3px solid #F07A20;
+    border-radius: 16px;
+    padding: 28px 32px 32px;
+    width: 380px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.active .change-password-modal {
+    transform: scale(1);
+  }
+  .modal-exit {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .modal-exit:hover { background: #c62a36; }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .modal-title-icon {
+    width: 28px;
+    height: 28px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 17px;
+  }
+  .modal-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    text-transform: uppercase;
+    color: #222;
+  }
+  .form-group {
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .form-label {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #F07A20;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .form-input {
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 40px 10px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: #F07A20; }
+  .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 34px;
+    cursor: pointer;
+    color: #999;
+    font-size: 16px;
+    user-select: none;
+  }
+  .modal-submit-btn {
+    display: block;
+    width: 100%;
+    margin: 24px 0 0;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+  .modal-submit-btn:hover { background: #333; }
+
+  .edit-profile-modal {
+    background: #f5f5f5;
+    border: 3px solid #F07A20;
+    border-radius: 16px;
+    padding: 28px 32px 32px;
+    width: 420px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.active .edit-profile-modal {
+    transform: scale(1);
+  }
+
+  .success-modal {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 32px 40px;
+    width: 320px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.active .success-modal {
+    transform: scale(1);
+  }
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    background: #e8573b;
+    border-radius: 12px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .success-icon svg {
+    width: 50px;
+    height: 50px;
+    fill: #fff;
+  }
+  .success-text {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff;
+    background: #e8573b;
+    padding: 8px 16px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #333;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-circle">
+      <img src="/assets/CNHS LOGO.png.png" alt="CNHS Logo">
+    </div>
+    <div class="header-title">CNHS SAFETY PORTAL</div>
+  </div>
+  <div class="header-right">
+    <div class="admin-avatar">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <div class="admin-info">
+      <div class="admin-name" id="header-admin-name">Admin Name</div>
+      <div class="admin-role" id="header-admin-role">Role Title</div>
+      <div class="admin-id" id="header-admin-id">ID: 012345678</div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+
+<div class="nav">
+  <a href="home.html" class="nav-item">Home</a>
+  <a href="reports.html" class="nav-item">Reports & Requests</a>
+  <a href="history.html" class="nav-item">History</a>
+  <a href="profile.html" class="nav-item active">Profile</a>
+</div>
+
+<div class="profile-wrap">
+  <div class="profile-card">
+    <div class="profile-avatar" onclick="showToast('Profile picture upload coming soon!')" title="Change profile picture">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <div class="profile-fields">
+      <div class="profile-field">
+        <div class="edit-icon" onclick="openEditModal('name')" title="Edit name">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        <span id="display-name">Admin Name</span>
+      </div>
+      <div class="profile-field">
+        <div class="edit-icon" onclick="openEditModal('role')" title="Edit role">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        <span id="display-role">Role Title</span>
+      </div>
+      <div class="profile-field">
+        <div class="edit-icon" onclick="openEditModal('id')" title="Edit ID">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        <span id="display-id">ID: 012345678</span>
+      </div>
+      <div class="profile-field">
+        <div class="edit-icon" onclick="openEditModal('gender')" title="Edit gender">
+          <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        </div>
+        <span id="display-gender">Gender: Male</span>
+      </div>
+    </div>
+    <button class="change-pw-btn" onclick="openChangePasswordModal()">
+      <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+      Change Password
+    </button>
+    <button class="save-btn" onclick="saveProfile()">Save</button>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="change-password-modal">
+  <div class="change-password-modal">
+    <button class="modal-exit" onclick="closeChangePasswordModal()">EXIT</button>
+    <div class="modal-header">
+      <div class="modal-title-icon">!</div>
+      <div class="modal-title">CHANGE YOUR PASSWORD</div>
+    </div>
+    <form id="change-password-form" onsubmit="changePassword(event)">
+      <div class="form-group">
+        <label class="form-label">CURRENT PASSWORD</label>
+        <input type="password" class="form-input" id="current-password" required>
+        <span class="password-toggle" onclick="togglePassword('current-password')">👁</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">NEW PASSWORD</label>
+        <input type="password" class="form-input" id="new-password" required>
+        <span class="password-toggle" onclick="togglePassword('new-password')">👁</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">CONFIRM NEW PASSWORD</label>
+        <input type="password" class="form-input" id="confirm-password" required>
+        <span class="password-toggle" onclick="togglePassword('confirm-password')">👁</span>
+      </div>
+      <button type="submit" class="modal-submit-btn">CHANGE PASSWORD</button>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="edit-profile-modal">
+  <div class="edit-profile-modal">
+    <button class="modal-exit" onclick="closeEditModal()">EXIT</button>
+    <div class="modal-header">
+      <div class="modal-title-icon">!</div>
+      <div class="modal-title" id="edit-modal-title">EDIT PROFILE</div>
+    </div>
+    <form id="edit-profile-form" onsubmit="saveEdit(event)">
+      <div class="form-group">
+        <label class="form-label" id="edit-field-label">FIELD</label>
+        <input type="text" class="form-input" id="edit-field-value" required>
+      </div>
+      <button type="submit" class="modal-submit-btn">SAVE</button>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="success-modal">
+  <div class="success-modal">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    </div>
+    <div class="success-text" id="success-text">SAVED SUCCESSFULLY</div>
+  </div>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+<script>
+let profileData = {
+  name: 'Admin Name',
+  role: 'Role Title',
+  id: '012345678',
+  gender: 'Male',
+  password: 'admin123'
+};
+
+let currentEditField = null;
+
+function init() {
+  loadProfile();
+}
+
+function loadProfile() {
+  document.getElementById('display-name').textContent = profileData.name;
+  document.getElementById('display-role').textContent = profileData.role;
+  document.getElementById('display-id').textContent = 'ID: ' + profileData.id;
+  document.getElementById('display-gender').textContent = 'Gender: ' + profileData.gender;
+  document.getElementById('header-admin-name').textContent = profileData.name;
+  document.getElementById('header-admin-role').textContent = profileData.role;
+  document.getElementById('header-admin-id').textContent = 'ID: ' + profileData.id;
+}
+
+function openChangePasswordModal() {
+  document.getElementById('change-password-modal').classList.add('active');
+}
+  
+function closeChangePasswordModal() {
+  document.getElementById('change-password-modal').classList.remove('active');
+  document.getElementById('change-password-form').reset();
+}
+
+function changePassword(event) {
+  event.preventDefault();
+  
+  const currentPw = document.getElementById('current-password').value;
+  const newPw = document.getElementById('new-password').value;
+  const confirmPw = document.getElementById('confirm-password').value;
+  
+  if (currentPw !== profileData.password) {
+    showToast('Current password is incorrect');
+    return;
+  }
+  
+  if (newPw !== confirmPw) {
+    showToast('New passwords do not match');
+    return;
+  }
+  
+  if (newPw.length < 6) {
+    showToast('Password must be at least 6 characters');
+    return;
+  }
+  
+  profileData.password = newPw;
+  closeChangePasswordModal();
+  showSuccessModal('changed');
+}
+
+function openEditModal(field) {
+  currentEditField = field;
+  const modal = document.getElementById('edit-profile-modal');
+  const title = document.getElementById('edit-modal-title');
+  const label = document.getElementById('edit-field-label');
+  const input = document.getElementById('edit-field-value');
+  
+  const fieldNames = {
+    name: 'NAME',
+    role: 'ROLE',
+    id: 'ID',
+    gender: 'GENDER'
+  };
+  
+  title.textContent = `EDIT ${fieldNames[field]}`;
+  label.textContent = fieldNames[field];
+  
+  switch(field) {
+    case 'name':
+      input.value = profileData.name;
+      break;
+    case 'role':
+      input.value = profileData.role;
+      break;
+    case 'id':
+      input.value = profileData.id;
+      break;
+    case 'gender':
+      input.value = profileData.gender;
+      break;
+  }
+  
+  modal.classList.add('active');
+  input.focus();
+}
+
+function closeEditModal() {
+  document.getElementById('edit-profile-modal').classList.remove('active');
+  currentEditField = null;
+}
+
+function saveEdit(event) {
+  event.preventDefault();
+  
+  const value = document.getElementById('edit-field-value').value.trim();
+  
+  if (!value) {
+    showToast('Field cannot be empty');
+    return;
+  }
+  
+  switch(currentEditField) {
+    case 'name':
+      profileData.name = value;
+      break;
+    case 'role':
+      profileData.role = value;
+      break;
+    case 'id':
+      profileData.id = value;
+      break;
+    case 'gender':
+      profileData.gender = value;
+      break;
+  }
+  
+  loadProfile();
+  closeEditModal();
+  showToast('Field updated successfully');
+}
+
+function saveProfile() {
+  showSuccessModal('saved');
+}
+
+function showSuccessModal(action) {
+  const texts = {
+    'saved': 'SAVED SUCCESSFULLY',
+    'changed': 'PASSWORD CHANGED SUCCESSFULLY'
+  };
+  document.getElementById('success-text').textContent = texts[action] || 'SUCCESS';
+  document.getElementById('success-modal').classList.add('active');
+  setTimeout(() => {
+    document.getElementById('success-modal').classList.remove('active');
+  }, 2000);
+}
+
+function togglePassword(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function logout() {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('cnhs_user');
+    sessionStorage.removeItem('cnhs_user');
+    window.location.href = 'login.html';
+  }
+}
+
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('active');
+    }
+  });
+});
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>

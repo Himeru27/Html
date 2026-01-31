@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNHS Safety Portal - Report Incident</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #F5E6D3;
+            min-height: 100vh;
+        }
+
+        .header {
+            padding: 1rem;
+            background: #F5E6D3;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #FF7F50;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            flex: 1;
+        }
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-inner {
+            width: 42px;
+            height: 42px;
+            background: #1e3a8a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fbbf24;
+        }
+
+        .logo-icon {
+            width: 20px;
+            height: 14px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            font-weight: 900;
+        }
+
+        .user-info-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-info {
+            background: #FFEAB0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .user-info-top {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            background: #FF9F4A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-avatar-inner {
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .user-name {
+            font-weight: bold;
+        }
+
+        .user-section {
+            color: #FF7F50;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #FF6B6B;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            font-size: 0.875rem;
+            font-weight: bold;
+            padding: 0.75rem 0;
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .nav-link.active {
+            border-bottom-color: #FF7F50;
+        }
+
+        .content {
+            padding: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        .form-container {
+            background: linear-gradient(to bottom, #FFB366, #FF9F5A);
+            border-radius: 1rem;
+            padding: 1.5rem;
+        }
+
+        .form-inner {
+            background: linear-gradient(to bottom, #FFCCA8, #FFB88A);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-icon {
+            width: 30px;
+            height: 30px;
+            background: #f97316;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .form-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .form-content {
+            background: #FFF0E6;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            color: #dc2626;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .form-select, .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 999px;
+            background: #FF7F50;
+            color: white;
+            font-weight: bold;
+            font-size: 0.875rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 3rem;
+        }
+
+        .form-input {
+            background: white;
+            border: 2px solid #fed7aa;
+            color: black;
+            font-weight: normal;
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            border: 2px solid #fed7aa;
+            height: 150px;
+            resize: none;
+            font-family: inherit;
+        }
+
+        .time-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .time-group .form-input {
+            flex: 1;
+        }
+
+        .time-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 999px;
+            font-weight: bold;
+            border: 2px solid #d1d5db;
+            background: #f3f4f6;
+            cursor: pointer;
+        }
+
+        .time-btn.active {
+            background: white;
+            border-color: #f97316;
+        }
+
+        .form-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d1d5db;
+        }
+
+        .dot.active {
+            background: #FF7F50;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2.5rem;
+            border-radius: 999px;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-next {
+            background: #FF9F5A;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #FF8C42;
+        }
+
+        .btn-back {
+            background: #FF6B6B;
+            color: white;
+        }
+
+        .btn-submit {
+            background: black;
+            color: white;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div class="header-logo">
+                <div class="logo-circle">
+                    <div class="logo-inner">
+                        <div class="logo-icon"></div>
+                    </div>
+                </div>
+                <h1 class="header-title">CNHS SAFETY PORTAL</h1>
+            </div>
+
+            <div class="user-info-container">
+                <div class="user-info">
+                    <div class="user-info-top">
+                        <div class="user-avatar">
+                            <div class="user-avatar-inner"></div>
+                        </div>
+                        <div>
+                            <div class="user-name">STUDENT NAME</div>
+                            <div class="user-section">SECTION/GRADE LVL</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.625rem;">
+                        <span style="font-weight: bold;">ID:</span> 01234567B
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="window.location.href='login.html'">LOGOUT</button>
+            </div>
+        </div>
+
+        <div class="nav">
+            <div class="nav-links">
+                <a href="AdminHome.html" class="nav-link">HOME</a>
+                <a href="report-incident.html" class="nav-link active">REPORT INCIDENT</a>
+                <a href="profile.html" class="nav-link">PROFILE</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="report-header">
+            <h1 class="report-title">CAMPUS INCIDENT REPORTS</h1>
+        </div>
+
+        <div class="form-container">
+            <div class="form-inner">
+                <div class="form-header">
+                    <div class="form-icon">!</div>
+                    <h2 class="form-title">REPORT AN INCIDENT</h2>
+                </div>
+
+                <form id="reportForm">
+
+                    <div class="step active" id="step1">
+                        <div class="form-content">
+                            <div class="form-group">
+                                <label class="form-label">What type of incident?</label>
+                                <select class="form-select" id="incidentType" required>
+                                    <option value="">SELECT</option>
+                                    <option value="medical">Medical Emergency</option>
+                                    <option value="safety">Safety Hazard</option>
+                                    <option value="violence">Violence</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Where did the incident occur?</label>
+                                <select class="form-select" id="location" required>
+                                    <option value="">SELECT</option>
+                                    <option value="classroom">Classroom</option>
+                                    <option value="hallway">Hallway</option>
+                                    <option value="cafeteria">Cafeteria</option>
+                                    <option value="grounds">School Grounds</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">What is the severity?</label>
+                                <select class="form-select" id="severity" required>
+                                    <option value="">SELECT</option>
+                                    <option value="low">Low</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="high">High</option>
+                                    <option value="critical">Critical</option>
+                                </select>
+                            </div>
+
+                            <div class="form-dots">
+                                <div class="dot active"></div>
+                                <div class="dot"></div>
+                            </div>
+
+                            <div class="form-buttons">
+                                <button type="button" class="btn btn-next" onclick="nextStep()">NEXT</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="step" id="step2">
+                        <div class="form-content">
+                            <div class="form-group">
+                                <label class="form-label">What time did it occur?</label>
+                                <div class="time-group">
+                                    <input type="text" class="form-input" id="time" placeholder="TYPE HERE" required>
+                                    <button type="button" class="time-btn" id="amBtn" onclick="selectPeriod('AM')">AM</button>
+                                    <button type="button" class="time-btn active" id="pmBtn" onclick="selectPeriod('PM')">PM</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" style="color: black;">DESCRIPTION:</label>
+                                <textarea class="form-textarea" id="description" required></textarea>
+                            </div>
+
+                            <div class="form-dots">
+                                <div class="dot"></div>
+                                <div class="dot active"></div>
+                            </div>
+
+                            <div class="form-buttons">
+                                <button type="button" class="btn btn-back" onclick="prevStep()">BACK</button>
+                                <button type="submit" class="btn btn-submit">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPeriod = 'PM';
+
+        function nextStep() {
+            const type = document.getElementById('incidentType').value;
+            const location = document.getElementById('location').value;
+            const severity = document.getElementById('severity').value;
+
+            if (!type || !location || !severity) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+        }
+
+        function prevStep() {
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+        }
+
+        function selectPeriod(period) {
+            currentPeriod = period;
+            const amBtn = document.getElementById('amBtn');
+            const pmBtn = document.getElementById('pmBtn');
+
+            if (period === 'AM') {
+                amBtn.classList.add('active');
+                pmBtn.classList.remove('active');
+            } else {
+                pmBtn.classList.add('active');
+                amBtn.classList.remove('active');
+            }
+        }
+
+        document.getElementById('reportForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const report = {
+                type: document.getElementById('incidentType').value,
+                location: document.getElementById('location').value,
+                severity: document.getElementById('severity').value,
+                time: document.getElementById('time').value + ' ' + currentPeriod,
+                description: document.getElementById('description').value,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Report submitted:', report);
+            alert('Incident report submitted successfully!');
+            window.location.href = 'home.html';
+        });
+    </script>
+</body>
+</html>

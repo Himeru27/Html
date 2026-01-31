@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            background: url('https://storage.googleapis.com/bukas-website-v3-prd/website_v3/data_sync/partner/cover_photo/phinma_29.jpg'); 
+            background-size: cover; 
+            min-height: 100vh; 
+        }
+        .dashboard { 
+            background: white; 
+            border-radius: 10px; 
+            max-width: 1200px; 
+            margin: 20px auto; 
+        }
+        .header { 
+            background: linear-gradient(135deg, #ff416c, #ff4b2b); 
+            color: white; 
+            border-radius: 10px 10px 0 0; 
+        }
+        .add-btn { 
+            background: linear-gradient(135deg, #ff416c, #ff4b2b); 
+            color: white; 
+        }
+        .edit-btn { 
+            background: linear-gradient(135deg, #2196F3, #21CBF3); 
+            color: white; 
+        }
+        .delete-btn { 
+            background: linear-gradient(135deg, #ff416c, #ff4b2b); 
+            color: white; 
+        }
+    </style>
+</head>
+<body>
+    <div class="w3-container w3-padding">
+        <div class="dashboard w3-card-4">
+            <div class="header w3-container w3-padding-24">
+                <div class="w3-row">
+                    <div class="w3-col m8">
+                        <h2>Admin Portal</h2>
+                        <p id="adminName">Loading...</p>
+                    </div>
+                    <div class="w3-col m4 w3-right-align">
+                        <button class="w3-button w3-round w3-white" onclick="logout()">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="w3-container w3-padding-24">
+                <h3>User Management</h3>
+                
+                <div class="w3-row w3-margin-bottom">
+                    <div class="w3-col m5">
+                        <input class="w3-input w3-border" type="text" id="newUsername" placeholder="New username">
+                    </div>
+                    <div class="w3-col m5">
+                        <select class="w3-select w3-border" id="newRole">
+                            <option value="admin">Admin</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="student">Student</option>
+                        </select>
+                    </div>
+                    <div class="w3-col m2">
+                        <button class="w3-button add-btn w3-block" onclick="addUser()">
+                            Add
+                        </button>
+                    </div>
+                </div>
+                
+                <table class="w3-table w3-striped w3-border">
+                    <thead>
+                        <tr class="w3-red">
+                            <th>Username</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        
+
+    function accessDashboard(user) {
+        if (user.role === "admin") {
+            document.getElementById('adminName').textContent = 'Welcome Admin! You can manage everything.';
+        } else if (user.role === "teacher") {
+            alert('Access denied. Admin only.');
+            window.location.href = 'LoginPortal.html';
+        } else if (user.role === "student") {
+            alert('Access denied. Admin only.');
+            window.location.href = 'LoginPortal.html';
+        } else {
+            alert('Access denied. Please login first.');
+            window.location.href = 'LoginPortal.html';
+        }
+    }
+        
+
+        accessDashboard(user);
+        
+
+        let users = JSON.parse(localStorage.getItem('users') || '[]');
+        if (users.length === 0) {
+            users = [
+                { username: 'admin', role: 'admin' },
+                { username: 'Taypin', role: 'teacher' },
+                { username: 'John', role: 'student' }
+            ];
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+        
+
+        function showUsers() {
+            const table = document.getElementById('userTable');
+            table.innerHTML = '';
+            
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i];
+                let roleColor = 'w3-blue';
+                if (user.role === 'admin') roleColor = 'w3-red';
+                if (user.role === 'student') roleColor = 'w3-green';
+                
+                const row = `
+                    <tr>
+                        <td>${user.username}</td>
+                        <td><span class="w3-tag ${roleColor}">${user.role}</span></td>
+                        <td>
+                            <button class="w3-button edit-btn w3-small" onclick="editUser(${i})">
+                                Edit
+                            </button>
+                            <button class="w3-button delete-btn w3-small" onclick="deleteUser(${i})">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                table.innerHTML += row;
+            }
+        }
+        
+
+        function addUser() {
+            const username = document.getElementById('newUsername').value.trim();
+            const role = document.getElementById('newRole').value;
+            
+            if (!username) {
+                alert('Enter username');
+                return;
+            }
+            
+            users.push({ username: username, role: role });
+            localStorage.setItem('users', JSON.stringify(users));
+            showUsers();
+            document.getElementById('newUsername').value = '';
+            alert('User added');
+        }
+        
+
+        function editUser(index) {
+            const newRole = prompt('New role for ' + users[index].username + ':', users[index].role);
+            if (newRole) {
+                users[index].role = newRole;
+                localStorage.setItem('users', JSON.stringify(users));
+                showUsers();
+            }
+        }
+        
+
+        function deleteUser(index) {
+            if (confirm('Delete ' + users[index].username + '?')) {
+                users.splice(index, 1);
+                localStorage.setItem('users', JSON.stringify(users));
+                showUsers();
+            }
+        }
+        
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'LoginPortal.html';
+        }
+        
+
+        showUsers();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNHS Safety Portal - Home</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap');
+  /* 
+  Akoa ng gipa format ning code para hinlo tan awon
+  wala pani back end tas basic functionality pa ang gi una nako kay lisodan kos pag replicate sa design sa figma :)
+
+  ~ PS: Shimz
+
+  
+  */ 
+
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Oswald', sans-serif;
+    background: #f5ebe0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    background: #F07A20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 28px;
+    min-height: 90px;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #d4a030;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .logo-circle img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+  }
+  .header-title {
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 2px;
+    text-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+  }
+  .header-right {
+    background: #fdf0d5;
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .admin-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f0c060;
+    border: 3px solid #e8a830;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-avatar svg {
+    width: 26px;
+    height: 26px;
+    fill: #c07020;
+  }
+  .admin-info {
+    text-align: left;
+  }
+  .admin-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #222;
+    text-transform: uppercase;
+  }
+  .admin-role {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #F07A20;
+    text-transform: uppercase;
+  }
+  .admin-id {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+  }
+  .logout-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .logout-btn:hover { background: #c62a36; }
+
+  .nav {
+    display: flex;
+    gap: 0;
+    padding: 0 28px;
+    background: #fff;
+    border-bottom: 1px solid #e8ddd0;
+  }
+  .nav-item {
+    padding: 14px 32px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 0.5px;
+    border: none;
+    background: none;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #F07A20;
+    border-radius: 2px 2px 0 0;
+  }
+  .nav-item:hover { color: #F07A20; }
+
+  .admin-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px;
+    flex-wrap: wrap;
+  }
+  .add-user-btn {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .add-user-btn:hover { background: #43a047; }
+
+  .select-section {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+  .select-section option { color: #333; background: #fff; }
+
+  .users-tab-label {
+    background: #fde8c8;
+    border-radius: 8px;
+    padding: 10px 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #333;
+  }
+  .users-tab-label .excl-icon {
+    width: 22px;
+    height: 22px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 13px;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 2px solid #222;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-left: auto;
+  }
+  .search-label {
+    background: #222;
+    color: #fff;
+    padding: 10px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+  .search-box input {
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    width: 160px;
+  }
+  .search-icon {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+  }
+
+  /* Table */
+  .table-container {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e0d5c5;
+    margin: 0 28px 28px;
+  }
+  .table-nav {
+    display: flex;
+    align-items: center;
+    background: #eee;
+    padding: 10px 16px;
+  }
+  .table-nav-arrow {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #555;
+    cursor: pointer;
+    padding: 0 6px;
+    transition: color 0.2s;
+  }
+  .table-nav-arrow:hover { color: #F07A20; }
+  .table-nav-arrow:disabled { 
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  .table-title {
+    flex: 1;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #222;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table th {
+    background: #d0c8be;
+    padding: 11px 10px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #333;
+    text-align: center;
+    border-bottom: 1px solid #c0b8a8;
+  }
+  table td {
+    padding: 13px 10px;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #f0ebe3;
+  }
+  table tr:last-child td { border-bottom: none; }
+  .action-btns { display: flex; gap: 8px; justify-content: center; }
+  .action-edit, .action-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 2px;
+    transition: color 0.2s;
+  }
+  .action-edit { color: #888; }
+  .action-edit:hover { color: #F07A20; }
+  .action-delete { color: #F07A20; }
+  .action-delete:hover { color: #e63946; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.active { 
+    display: flex;
+    opacity: 1;
+  }
+
+  /* ===== ADD/EDIT USER MODAL ===== */
+  .add-user-modal {
+    background: #f5f5f5;
+    border: 3px solid #F07A20;
+    border-radius: 16px;
+    padding: 28px 32px 32px;
+    width: 420px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.active .add-user-modal {
+    transform: scale(1);
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .modal-exit {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .modal-exit:hover { background: #c62a36; }
+  .modal-title-icon {
+    width: 28px;
+    height: 28px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 17px;
+  }
+  .modal-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    text-transform: uppercase;
+    color: #222;
+  }
+  .form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .form-group {
+    flex: 1;
+    position: relative;
+  }
+  .form-label {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #F07A20;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .form-input {
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: #F07A20; }
+  .form-select {
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    background: #F07A20;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+  }
+  .form-select option { background: #fff; color: #333; }
+  .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 32px;
+    cursor: pointer;
+    color: #999;
+    font-size: 14px;
+    user-select: none;
+  }
+  .modal-submit-btn {
+    display: block;
+    width: 160px;
+    margin: 24px auto 0;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 11px 24px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+  .modal-submit-btn:hover { background: #333; }
+
+  .edit-icon-btn {
+    position: absolute;
+    right: 8px;
+    top: 28px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    font-size: 16px;
+    padding: 4px;
+    transition: color 0.2s;
+  }
+  .edit-icon-btn:hover { color: #F07A20; }
+
+  .success-modal {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 32px 40px;
+    width: 320px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.active .success-modal {
+    transform: scale(1);
+  }
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    background: #e8573b;
+    border-radius: 12px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .success-icon svg {
+    width: 50px;
+    height: 50px;
+    fill: #fff;
+  }
+  .success-text {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #fff;
+    background: #e8573b;
+    padding: 8px 16px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  .delete-modal {
+    background: #f5f5f5;
+    border: 3px solid #F07A20;
+    border-radius: 16px;
+    padding: 28px 32px;
+    width: 420px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .modal-overlay.active .delete-modal {
+    transform: scale(1);
+  }
+  .delete-modal-icon {
+    width: 28px;
+    height: 28px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 17px;
+    margin: 0 auto 16px;
+  }
+  .delete-modal-text {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #e8573b;
+    margin-bottom: 24px;
+  }
+  .delete-modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .confirm-delete-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .confirm-delete-btn:hover { background: #d04530; }
+  .cancel-delete-btn {
+    background: #666;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .cancel-delete-btn:hover { background: #555; }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #333;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .table-container.hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-circle">
+      <img src="/assets/CNHS LOGO.png.png" alt="CNHS Logo">
+    </div>
+    <div class="header-title">CNHS SAFETY PORTAL</div>
+  </div>
+  <div class="header-right">
+    <div class="admin-avatar">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <div class="admin-info">
+      <div class="admin-name" id="admin-name">Admin Name</div>
+      <div class="admin-role" id="admin-role">Role Title</div>
+      <div class="admin-id" id="admin-id">ID: 012345678</div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<div class="nav">
+  <a href="home.html" class="nav-item active">Home</a>
+  <a href="reports.html" class="nav-item">Reports & Requests</a>
+  <a href="history.html" class="nav-item">History</a>
+  <a href="profile.html" class="nav-item">Profile</a>
+</div>
+
+<div class="admin-controls">
+  <button class="add-user-btn" onclick="openAddUserModal()">Add User</button>
+  <select class="select-section" id="section-select" onchange="filterBySection()">
+    <option value="">Select Section ▼</option>
+    <option value="A">Section A</option>
+    <option value="B">Section B</option>
+    <option value="C">Section C</option>
+  </select>
+  <div class="users-tab-label">
+    <div class="excl-icon">!</div>
+    <span id="current-tab-label">Users Tab</span>
+  </div>
+  <div class="search-box">
+    <div class="search-label">Search</div>
+    <input type="text" id="search-input" placeholder="" oninput="searchTable()">
+    <div class="search-icon" onclick="searchTable()">🔍</div>
+  </div>
+</div>
+
+
+<div class="table-container" id="student-table">
+  <div class="table-nav">
+    <button class="table-nav-arrow" onclick="switchTable('prev')" id="prev-table">◀</button>
+    <div class="table-title" id="table-title">Student Table</div>
+    <button class="table-nav-arrow" onclick="switchTable('next')" id="next-table">▶</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Role</th><th>First Name</th><th>Last Name</th><th>Initial</th>
+        <th>Section</th><th>Grade Level</th><th>Batch Year</th><th>Gender</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="student-table-body">
+    </tbody>
+  </table>
+</div>
+
+
+
+<div class="table-container hidden" id="faculty-table">
+  <div class="table-nav">
+    <button class="table-nav-arrow" onclick="switchTable('prev')">◀</button>
+    <div class="table-title">Faculty Member Table</div>
+    <button class="table-nav-arrow" onclick="switchTable('next')">▶</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Role</th><th>First Name</th><th>Last Name</th><th>Initial</th>
+        <th>Gender</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="faculty-table-body">
+    </tbody>
+  </table>
+</div>
+
+
+
+
+<div class="table-container hidden" id="admin-table">
+  <div class="table-nav">
+    <button class="table-nav-arrow" onclick="switchTable('prev')">◀</button>
+    <div class="table-title">Admin Table</div>
+    <button class="table-nav-arrow" onclick="switchTable('next')">▶</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Role</th><th>First Name</th><th>Last Name</th><th>Initial</th>
+        <th>Gender</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="admin-table-body">
+    </tbody>
+  </table>
+</div>
+
+<div class="table-container hidden" id="security-table">
+  <div class="table-nav">
+    <button class="table-nav-arrow" onclick="switchTable('prev')">◀</button>
+    <div class="table-title">Campus Security Personnel Table</div>
+    <button class="table-nav-arrow" onclick="switchTable('next')">▶</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Role</th><th>First Name</th><th>Last Name</th><th>Initial</th>
+        <th>Gender</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="security-table-body">
+    </tbody>
+  </table>
+</div>
+
+
+
+
+<div class="modal-overlay" id="add-user-modal">
+  <div class="add-user-modal">
+    <button class="modal-exit" onclick="closeAddUserModal()">EXIT</button>
+    <div class="modal-header">
+      <div class="modal-title-icon">!</div>
+      <div class="modal-title" id="add-modal-title">ADD STUDENT USER</div>
+    </div>
+    <form id="add-user-form" onsubmit="handleAddUser(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">USERNAME</label>
+          <input type="text" class="form-input" id="add-username" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">PASSWORD</label>
+          <input type="password" class="form-input" id="add-password" required>
+          <span class="password-toggle" onclick="togglePassword('add-password')">👁</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">FIRST NAME</label>
+          <input type="text" class="form-input" id="add-firstname" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">LAST NAME</label>
+          <input type="text" class="form-input" id="add-lastname" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">INITIAL</label>
+          <input type="text" class="form-input" id="add-initial" maxlength="1">
+        </div>
+      </div>
+      <div class="form-row" id="student-fields">
+        <div class="form-group">
+          <label class="form-label">SECTION</label>
+          <input type="text" class="form-input" id="add-section">
+        </div>
+        <div class="form-group">
+          <label class="form-label">GRADE LEVEL</label>
+          <select class="form-select" id="add-grade">
+            <option>SELECT</option>
+            <option>Grade 7</option>
+            <option>Grade 8</option>
+            <option>Grade 9</option>
+            <option>Grade 10</option>
+            <option>Grade 11</option>
+            <option>Grade 12</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">GENDER</label>
+          <select class="form-select" id="add-gender" required>
+            <option>SELECT</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="modal-submit-btn">ADD USER</button>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="edit-user-modal">
+  <div class="add-user-modal">
+    <button class="modal-exit" onclick="closeEditUserModal()">EXIT</button>
+    <div class="modal-header">
+      <div class="modal-title-icon">!</div>
+      <div class="modal-title">EDIT USER</div>
+    </div>
+    <form id="edit-user-form" onsubmit="handleEditUser(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">USERNAME</label>
+          <input type="text" class="form-input" id="edit-username" required>
+          <button type="button" class="edit-icon-btn" onclick="enableEdit('edit-username')">✎</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">PASSWORD</label>
+          <input type="password" class="form-input" id="edit-password" required>
+          <span class="password-toggle" onclick="togglePassword('edit-password')">👁</span>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">FIRST NAME</label>
+          <input type="text" class="form-input" id="edit-firstname" required>
+          <button type="button" class="edit-icon-btn" onclick="enableEdit('edit-firstname')">✎</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">LAST NAME</label>
+          <input type="text" class="form-input" id="edit-lastname" required>
+          <button type="button" class="edit-icon-btn" onclick="enableEdit('edit-lastname')">✎</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">INITIAL</label>
+          <input type="text" class="form-input" id="edit-initial" maxlength="1">
+          <button type="button" class="edit-icon-btn" onclick="enableEdit('edit-initial')">✎</button>
+        </div>
+      </div>
+      <div class="form-row" id="edit-student-fields">
+        <div class="form-group">
+          <label class="form-label">SECTION</label>
+          <input type="text" class="form-input" id="edit-section">
+          <button type="button" class="edit-icon-btn" onclick="enableEdit('edit-section')">✎</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">GRADE LEVEL</label>
+          <select class="form-select" id="edit-grade">
+            <option>SELECT</option>
+            <option>Grade 7</option>
+            <option>Grade 8</option>
+            <option>Grade 9</option>
+            <option>Grade 10</option>
+            <option>Grade 11</option>
+            <option>Grade 12</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">GENDER</label>
+          <select class="form-select" id="edit-gender">
+            <option>SELECT</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="modal-submit-btn">SAVE CHANGES</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="delete-modal">
+  <div class="delete-modal">
+    <div class="delete-modal-icon">!</div>
+    <div class="delete-modal-text">ARE YOU SURE YOU WANT TO DELETE THIS USER?</div>
+    <div class="delete-modal-actions">
+      <button class="confirm-delete-btn" onclick="confirmDelete()">Confirm delete</button>
+      <button class="cancel-delete-btn" onclick="closeDeleteModal()">No, go back</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal-overlay" id="success-modal">
+  <div class="success-modal">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+    </div>
+    <div class="success-text" id="success-text">ADDED SUCCESSFULLY</div>
+  </div>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+<script>
+let currentTable = 0;
+const tables = ['student', 'faculty', 'admin', 'security'];
+let currentEditId = null;
+let currentDeleteId = null;
+
+
+
+
+let students = [
+  {id: '001', role: 'Student', firstName: 'John', lastName: 'Doe', initial: 'A', section: 'A', grade: '11', batchYear: '2024', gender: 'Male', username: 'johndoe', password: 'password123'}
+];
+
+let faculty = [
+  {role: 'Teacher', firstName: 'Jane', lastName: 'Smith', initial: 'B', gender: 'Female', username: 'janesmith', password: 'pass123'}
+];
+
+let admins = [
+  {role: 'Administrator', firstName: 'Admin', lastName: 'User', initial: 'C', gender: 'Male', username: 'admin', password: 'admin123'}
+];
+
+let security = [
+  {id: 'SEC001', role: 'Security', firstName: 'Guard', lastName: 'One', initial: 'D', gender: 'Male', username: 'guard1', password: 'secure123'}
+];
+
+
+function init() {
+  renderStudentTable();
+  renderFacultyTable();
+  renderAdminTable();
+  renderSecurityTable();
+  updateTableVisibility();
+}
+
+
+function renderStudentTable() {
+  const tbody = document.getElementById('student-table-body');
+  tbody.innerHTML = students.map((s, idx) => `
+    <tr>
+      <td>${s.id}</td>
+      <td>${s.role}</td>
+      <td>${s.firstName}</td>
+      <td>${s.lastName}</td>
+      <td>${s.initial}</td>
+      <td>${s.section}</td>
+      <td>${s.grade}</td>
+      <td>${s.batchYear}</td>
+      <td>${s.gender}</td>
+      <td>
+        <div class="action-btns">
+          <button class="action-edit" onclick="openEditUserModal(${idx}, 'student')" title="Edit">✎</button>
+          <button class="action-delete" onclick="openDeleteModal(${idx}, 'student')" title="Delete">🗑</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderFacultyTable() {
+  const tbody = document.getElementById('faculty-table-body');
+  tbody.innerHTML = faculty.map((f, idx) => `
+    <tr>
+      <td>${f.role}</td>
+      <td>${f.firstName}</td>
+      <td>${f.lastName}</td>
+      <td>${f.initial}</td>
+      <td>${f.gender}</td>
+      <td>
+        <div class="action-btns">
+          <button class="action-edit" onclick="openEditUserModal(${idx}, 'faculty')" title="Edit">✎</button>
+          <button class="action-delete" onclick="openDeleteModal(${idx}, 'faculty')" title="Delete">🗑</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderAdminTable() {
+  const tbody = document.getElementById('admin-table-body');
+  tbody.innerHTML = admins.map((a, idx) => `
+    <tr>
+      <td>${a.role}</td>
+      <td>${a.firstName}</td>
+      <td>${a.lastName}</td>
+      <td>${a.initial}</td>
+      <td>${a.gender}</td>
+      <td>
+        <div class="action-btns">
+          <button class="action-edit" onclick="openEditUserModal(${idx}, 'admin')" title="Edit">✎</button>
+          <button class="action-delete" onclick="openDeleteModal(${idx}, 'admin')" title="Delete">🗑</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderSecurityTable() {
+  const tbody = document.getElementById('security-table-body');
+  tbody.innerHTML = security.map((s, idx) => `
+    <tr>
+      <td>${s.id}</td>
+      <td>${s.role}</td>
+      <td>${s.firstName}</td>
+      <td>${s.lastName}</td>
+      <td>${s.initial}</td>
+      <td>${s.gender}</td>
+      <td>
+        <div class="action-btns">
+          <button class="action-edit" onclick="openEditUserModal(${idx}, 'security')" title="Edit">✎</button>
+          <button class="action-delete" onclick="openDeleteModal(${idx}, 'security')" title="Delete">🗑</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function switchTable(direction) {
+  if (direction === 'next') {
+    currentTable = (currentTable + 1) % tables.length;
+  } else {
+    currentTable = (currentTable - 1 + tables.length) % tables.length;
+  }
+  updateTableVisibility();
+}
+
+function updateTableVisibility() {
+  tables.forEach((table, idx) => {
+    const element = document.getElementById(`${table}-table`);
+    if (idx === currentTable) {
+      element.classList.remove('hidden');
+    } else {
+      element.classList.add('hidden');
+    }
+  });
+  
+  const labels = {
+    student: 'Users Tab',
+    faculty: 'Faculty Tab',
+    admin: 'Admin Tab',
+    security: 'Security Tab'
+  };
+  document.getElementById('current-tab-label').textContent = labels[tables[currentTable]];
+}
+
+
+function openAddUserModal() {
+  const modal = document.getElementById('add-user-modal');
+  const title = document.getElementById('add-modal-title');
+  const studentFields = document.getElementById('student-fields');
+  
+  document.getElementById('add-user-form').reset();
+  
+
+  const titles = {
+    student: 'ADD STUDENT USER',
+    faculty: 'ADD FACULTY MEMBER USER',
+    admin: 'ADD ADMIN USER',
+    security: 'ADD CAMPUS PERSONNEL USER'
+  };
+  title.textContent = titles[tables[currentTable]];
+  
+  // Show/hide student-specific fields
+  if (tables[currentTable] === 'student') {
+    studentFields.style.display = 'flex';
+  } else {
+    studentFields.style.display = 'none';
+  }
+  
+  modal.classList.add('active');
+}
+
+function closeAddUserModal() {
+  document.getElementById('add-user-modal').classList.remove('active');
+}
+
+function handleAddUser(event) {
+  event.preventDefault();
+  
+  const username = document.getElementById('add-username').value;
+  const password = document.getElementById('add-password').value;
+  const firstName = document.getElementById('add-firstname').value;
+  const lastName = document.getElementById('add-lastname').value;
+  const initial = document.getElementById('add-initial').value;
+  const gender = document.getElementById('add-gender').value;
+  
+  const newUser = {
+    username,
+    password,
+    firstName,
+    lastName,
+    initial,
+    gender
+  };
+  
+  const tableType = tables[currentTable];
+  
+  if (tableType === 'student') {
+    const section = document.getElementById('add-section').value;
+    const grade = document.getElementById('add-grade').value;
+    const id = String(students.length + 1).padStart(3, '0');
+    students.push({
+      ...newUser,
+      id,
+      role: 'Student',
+      section,
+      grade,
+      batchYear: new Date().getFullYear().toString()
+    });
+    renderStudentTable();
+  } else if (tableType === 'faculty') {
+    faculty.push({...newUser, role: 'Teacher'});
+    renderFacultyTable();
+  } else if (tableType === 'admin') {
+    admins.push({...newUser, role: 'Administrator'});
+    renderAdminTable();
+  } else if (tableType === 'security') {
+    const id = 'SEC' + String(security.length + 1).padStart(3, '0');
+    security.push({...newUser, id, role: 'Security'});
+    renderSecurityTable();
+  }
+  
+  closeAddUserModal();
+  showSuccessModal('added');
+}
+
+
+function openEditUserModal(index, type) {
+  currentEditId = {index, type};
+  const modal = document.getElementById('edit-user-modal');
+  const studentFields = document.getElementById('edit-student-fields');
+  
+  let user;
+  if (type === 'student') {
+    user = students[index];
+    studentFields.style.display = 'flex';
+    document.getElementById('edit-section').value = user.section;
+    document.getElementById('edit-grade').value = user.grade;
+  } else if (type === 'faculty') {
+    user = faculty[index];
+    studentFields.style.display = 'none';
+  } else if (type === 'admin') {
+    user = admins[index];
+    studentFields.style.display = 'none';
+  } else if (type === 'security') {
+    user = security[index];
+    studentFields.style.display = 'none';
+  }
+  
+  document.getElementById('edit-username').value = user.username;
+  document.getElementById('edit-password').value = user.password;
+  document.getElementById('edit-firstname').value = user.firstName;
+  document.getElementById('edit-lastname').value = user.lastName;
+  document.getElementById('edit-initial').value = user.initial;
+  document.getElementById('edit-gender').value = user.gender;
+  
+
+  document.querySelectorAll('#edit-user-form input').forEach(input => {
+    input.disabled = true;
+  });
+  
+  modal.classList.add('active');
+}
+
+function closeEditUserModal() {
+  document.getElementById('edit-user-modal').classList.remove('active');
+  currentEditId = null;
+}
+
+function enableEdit(fieldId) {
+  document.getElementById(fieldId).disabled = false;
+  document.getElementById(fieldId).focus();
+}
+
+function handleEditUser(event) {
+  event.preventDefault();
+  
+  if (!currentEditId) return;
+  
+  const {index, type} = currentEditId;
+  
+  const updatedUser = {
+    username: document.getElementById('edit-username').value,
+    password: document.getElementById('edit-password').value,
+    firstName: document.getElementById('edit-firstname').value,
+    lastName: document.getElementById('edit-lastname').value,
+    initial: document.getElementById('edit-initial').value,
+    gender: document.getElementById('edit-gender').value
+  };
+  
+  if (type === 'student') {
+    students[index] = {
+      ...students[index],
+      ...updatedUser,
+      section: document.getElementById('edit-section').value,
+      grade: document.getElementById('edit-grade').value
+    };
+    renderStudentTable();
+  } else if (type === 'faculty') {
+    faculty[index] = {...faculty[index], ...updatedUser};
+    renderFacultyTable();
+  } else if (type === 'admin') {
+    admins[index] = {...admins[index], ...updatedUser};
+    renderAdminTable();
+  } else if (type === 'security') {
+    security[index] = {...security[index], ...updatedUser};
+    renderSecurityTable();
+  }
+  
+  closeEditUserModal();
+  showSuccessModal('changed');
+}
+
+function openDeleteModal(index, type) {
+  currentDeleteId = {index, type};
+  document.getElementById('delete-modal').classList.add('active');
+}
+
+function closeDeleteModal() {
+  document.getElementById('delete-modal').classList.remove('active');
+  currentDeleteId = null;
+}
+
+function confirmDelete() {
+  if (!currentDeleteId) return;
+  
+  const {index, type} = currentDeleteId;
+  
+  if (type === 'student') {
+    students.splice(index, 1);
+    renderStudentTable();
+  } else if (type === 'faculty') {
+    faculty.splice(index, 1);
+    renderFacultyTable();
+  } else if (type === 'admin') {
+    admins.splice(index, 1);
+    renderAdminTable();
+  } else if (type === 'security') {
+    security.splice(index, 1);
+    renderSecurityTable();
+  }
+  
+  closeDeleteModal();
+  showSuccessModal('removed');
+}
+
+
+function showSuccessModal(action) {
+  const texts = {
+    'added': 'ADDED SUCCESSFULLY',
+    'changed': 'CHANGED SUCCESSFULLY',
+    'removed': 'REMOVED SUCCESSFULLY'
+  };
+  document.getElementById('success-text').textContent = texts[action] || 'SUCCESS';
+  document.getElementById('success-modal').classList.add('active');
+  setTimeout(() => {
+    document.getElementById('success-modal').classList.remove('active');
+  }, 2000);
+}
+
+
+function togglePassword(id) {
+  const input = document.getElementById(id);
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function filterBySection() {
+  const section = document.getElementById('section-select').value;
+  if (!section) {
+    renderStudentTable();
+    return;
+  }
+  
+  const tbody = document.getElementById('student-table-body');
+  const filtered = students.filter(s => s.section === section);
+  tbody.innerHTML = filtered.map((s, idx) => `
+    <tr>
+      <td>${s.id}</td>
+      <td>${s.role}</td>
+      <td>${s.firstName}</td>
+      <td>${s.lastName}</td>
+      <td>${s.initial}</td>
+      <td>${s.section}</td>
+      <td>${s.grade}</td>
+      <td>${s.batchYear}</td>
+      <td>${s.gender}</td>
+      <td>
+        <div class="action-btns">
+          <button class="action-edit" onclick="openEditUserModal(${students.indexOf(s)}, 'student')">✎</button>
+          <button class="action-delete" onclick="openDeleteModal(${students.indexOf(s)}, 'student')">🗑</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function searchTable() {
+  const query = document.getElementById('search-input').value.toLowerCase();
+  const tableType = tables[currentTable];
+  
+  let data, tbody;
+  if (tableType === 'student') {
+    data = students;
+    tbody = document.getElementById('student-table-body');
+  } else if (tableType === 'faculty') {
+    data = faculty;
+    tbody = document.getElementById('faculty-table-body');
+  } else if (tableType === 'admin') {
+    data = admins;
+    tbody = document.getElementById('admin-table-body');
+  } else if (tableType === 'security') {
+    data = security;
+    tbody = document.getElementById('security-table-body');
+  }
+  
+  const filtered = data.filter(item => {
+    return Object.values(item).some(val => 
+      String(val).toLowerCase().includes(query)
+    );
+  });
+  
+
+  if (tableType === 'student') {
+    tbody.innerHTML = filtered.map((s, idx) => `
+      <tr>
+        <td>${s.id}</td>
+        <td>${s.role}</td>
+        <td>${s.firstName}</td>
+        <td>${s.lastName}</td>
+        <td>${s.initial}</td>
+        <td>${s.section}</td>
+        <td>${s.grade}</td>
+        <td>${s.batchYear}</td>
+        <td>${s.gender}</td>
+        <td>
+          <div class="action-btns">
+            <button class="action-edit" onclick="openEditUserModal(${students.indexOf(s)}, 'student')">✎</button>
+            <button class="action-delete" onclick="openDeleteModal(${students.indexOf(s)}, 'student')">🗑</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+}
+
+function logout() {
+  if (confirm('Are you sure you want to logout?')) {
+    window.location.href = 'login.html';
+  }
+}
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('active');
+    }
+  });
+});
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>

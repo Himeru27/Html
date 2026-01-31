@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNHS Safety Portal - Reports & Requests</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap');
+
+  /* 
+  Akoa ng gipa format ning code para hinlo tan awon
+  wala pani back end tas basic functionality pa ang gi una nako kay lisodan kos pag replicate sa design sa figma :)
+
+  ~ PS: Shimz
+
+  
+  */ 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Oswald', sans-serif;
+    background: #f5ebe0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    background: #F07A20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 28px;
+    min-height: 90px;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #d4a030;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .logo-circle img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+  }
+  .header-title {
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 2px;
+    text-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+  }
+  .header-right {
+    background: #fdf0d5;
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .admin-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f0c060;
+    border: 3px solid #e8a830;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-avatar svg {
+    width: 26px;
+    height: 26px;
+    fill: #c07020;
+  }
+  .admin-info {
+    text-align: left;
+  }
+  .admin-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #222;
+    text-transform: uppercase;
+  }
+  .admin-role {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #F07A20;
+    text-transform: uppercase;
+  }
+  .admin-id {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+  }
+  .logout-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .logout-btn:hover { background: #c62a36; }
+
+
+  .nav {
+    display: flex;
+    gap: 0;
+    padding: 0 28px;
+    background: #fff;
+    border-bottom: 1px solid #e8ddd0;
+  }
+  .nav-item {
+    padding: 14px 32px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 0.5px;
+    border: none;
+    background: none;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #F07A20;
+    border-radius: 2px 2px 0 0;
+  }
+  .nav-item:hover { color: #F07A20; }
+
+  .reports-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 180px);
+  }
+  .reports-card {
+    background: #fde8c8;
+    border-radius: 18px;
+    padding: 36px 48px;
+    width: 420px;
+  }
+  .reports-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .reports-card-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #333;
+  }
+  .reports-option {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+    cursor: pointer;
+  }
+  .reports-option-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .reports-option-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1.3;
+    transition: background 0.2s;
+  }
+  .reports-option-btn:hover { background: #d96a1a; }
+  .reports-option-btn.red { background: #e8573b; }
+  .reports-option-btn.red:hover { background: #d04530; }
+  .reports-option-btn.dark-red { background: #c0392b; }
+  .reports-option-btn.dark-red:hover { background: #a93226; }
+
+
+  .sub-page { display: none; padding: 28px; }
+  .sub-page.active { display: block; }
+
+  .back-btn {
+    background: #5dade2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 22px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .back-btn:hover { background: #4a9cc4; }
+
+  .sub-page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .sub-page-title .excl-icon, .reports-card-title .excl-icon {
+    width: 26px;
+    height: 26px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 16px;
+  }
+  .sub-page-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+
+  .medicine-card {
+    background: #fde8c8;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    transition: transform 0.2s;
+  }
+  .medicine-card:hover {
+    transform: translateY(-2px);
+  }
+  .medicine-card-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #e8573b;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .medicine-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .view-student-btn {
+    background: #f0c060;
+    color: #333;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1.3;
+    transition: background 0.2s;
+  }
+  .view-student-btn:hover { background: #e0b050; }
+  .date-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    color: #999;
+  }
+  .approve-btn {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .approve-btn:hover { background: #43a047; }
+  .decline-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .decline-btn:hover { background: #d04530; }
+  .med-action-group { display: flex; gap: 8px; }
+
+
+  .emergency-wrap {
+    background: #f8c8c8;
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .emergency-card {
+    background: #fdd8d0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .emergency-card:hover {
+    transform: translateY(-2px);
+  }
+  .emergency-card-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #e8573b;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-right: 28px;
+  }
+  .emergency-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .more-details-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1.3;
+    transition: background 0.2s;
+  }
+  .more-details-btn:hover { background: #d96a1a; }
+  .accept-btn {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 18px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .accept-btn:hover { background: #43a047; }
+  .close-x {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 28px;
+    height: 28px;
+    background: #e8573b;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .close-x:hover { background: #d04530; }
+
+
+  .incidents-wrap {
+    background: #fde8c8;
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .incident-card {
+    background: #fff8f0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .incident-card:hover {
+    transform: translateY(-2px);
+  }
+  .incident-card-text {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-right: 28px;
+    line-height: 1.4;
+  }
+  .incident-card-text .building-link {
+    color: #e8573b;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .incident-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .inform-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1.3;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .inform-btn:hover { background: #d04530; }
+  .inform-btn.dark { background: #333; }
+  .inform-btn.dark:hover { background: #222; }
+  .incident-pagination {
+    text-align: center;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .dots { display: flex; gap: 6px; }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .dot.active { background: #e8573b; }
+  .next-btn, .prev-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 28px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .next-btn:hover, .prev-btn:hover { background: #d04530; }
+
+
+  .alarm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .alarm-overlay.active { 
+    display: flex;
+    opacity: 1;
+  }
+  .alarm-modal {
+    background: #f0f0f0;
+    border-radius: 16px;
+    padding: 30px 36px 36px;
+    width: 520px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .alarm-overlay.active .alarm-modal {
+    transform: scale(1);
+  }
+  .alarm-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .view-prev-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .view-prev-btn:hover { background: #d96a1a; }
+  .exit-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .exit-btn:hover { background: #c62a36; }
+  .alarm-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .alarm-title .excl-icon {
+    width: 28px;
+    height: 28px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 17px;
+  }
+  .alarm-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #222;
+  }
+  .alarm-form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .alarm-form-group { flex: 1; }
+  .alarm-form-group label {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .alarm-select {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23fff' d='M7 10L1 4h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 38px;
+  }
+  .alarm-select option { color: #333; background: #fff; }
+  .alarm-time-input {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    width: 100%;
+    background: #fff;
+    color: #333;
+  }
+  .alarm-desc-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+    display: block;
+    letter-spacing: 0.5px;
+  }
+  .alarm-textarea {
+    width: 100%;
+    height: 110px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    background: #fff;
+  }
+  .alarm-textarea:focus { border-color: #F07A20; }
+  .announce-btn {
+    display: block;
+    width: 180px;
+    margin: 24px auto 0;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+  .announce-btn:hover { background: #333; }
+
+  .info-modal {
+    background: #fef8f0;
+    border: 3px solid #F07A20;
+    border-radius: 16px;
+    padding: 28px 32px;
+    width: 450px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s;
+  }
+  .alarm-overlay.active .info-modal {
+    transform: scale(1);
+  }
+  .info-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .info-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .info-modal-title .excl-icon {
+    width: 24px;
+    height: 24px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 14px;
+  }
+  .info-modal-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #222;
+  }
+  .info-exit-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .info-exit-btn:hover { background: #c62a36; }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .info-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .info-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #F07A20;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .info-value {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+  }
+  .info-description {
+    background: #fff;
+    border-radius: 8px;
+    padding: 14px;
+    margin-top: 12px;
+  }
+  .info-description-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #F07A20;
+    margin-bottom: 8px;
+  }
+  .info-description-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #333;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo-circle">
+      <img src="/assets/CNHS LOGO.png.png" alt="CNHS Logo">
+    </div>
+    <div class="header-title">CNHS SAFETY PORTAL</div>
+  </div>
+  <div class="header-right">
+    <div class="admin-avatar">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <div class="admin-info">
+      <div class="admin-name">Admin Name</div>
+      <div class="admin-role">Role Title</div>
+      <div class="admin-id">ID: 012345678</div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+</div>
+
+
+<div class="nav">
+  <a href="home.html" class="nav-item">Home</a>
+  <a href="reports.html" class="nav-item active">Reports & Requests</a>
+  <a href="history.html" class="nav-item">History</a>
+  <a href="profile.html" class="nav-item">Profile</a>
+</div>
+
+
+<div id="reports-menu">
+  <div class="reports-menu">
+    <div class="reports-card">
+      <div class="reports-card-title">
+        <div class="excl-icon">!</div>
+        <span>Manage Reports & Request</span>
+      </div>
+      <div class="reports-option">
+        <div class="reports-option-icon">
+          <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="28" height="22" rx="4" fill="#F07A20"/><circle cx="32" cy="8" r="6" fill="#e63946"/><circle cx="32" cy="8" r="3" fill="#fff"/><text x="18" y="26" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">...</text></svg>
+        </div>
+        <button class="reports-option-btn" onclick="showSubPage('medicine')">View Medicine<br>Requests</button>
+      </div>
+      <div class="reports-option">
+        <div class="reports-option-icon">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M24 4 L44 28 L4 28 Z" fill="#f0c060"/><rect x="20" y="18" width="8" height="10" rx="1" fill="#e63946"/><rect x="22" y="12" width="4" height="6" rx="1" fill="#e63946"/></svg>
+        </div>
+        <button class="reports-option-btn red" onclick="showSubPage('emergency')">View Emergency<br>Requests</button>
+      </div>
+      <div class="reports-option">
+        <div class="reports-option-icon">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M24 6 L42 38 L6 38 Z" fill="#f0c060" stroke="#e8a830" stroke-width="2"/><text x="24" y="34" text-anchor="middle" font-size="18" fill="#e8573b" font-family="sans-serif" font-weight="bold">!</text></svg>
+        </div>
+        <button class="reports-option-btn red" onclick="showSubPage('incidents')">View Incident<br>Reports</button>
+      </div>
+      <div class="reports-option">
+        <div class="reports-option-icon">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M8 24 L16 16 L16 20 L32 14 L32 18 L40 12 L40 32 L8 32 Z" fill="#F07A20"/><path d="M32 18 L32 14 L40 12 L40 20 Z" fill="#d96a1a"/></svg>
+        </div>
+        <button class="reports-option-btn dark-red" onclick="openAlarm()">Announce<br>Emergency Alarm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="sub-page" id="sub-medicine">
+  <button class="back-btn" onclick="hideSubPages()">Back</button>
+  <div class="sub-page-title">
+    <div class="excl-icon">!</div>
+    <span>Student Medicine Requested</span>
+  </div>
+  <div id="medicine-requests-container">
+  </div>
+</div>
+
+
+<div class="sub-page" id="sub-emergency">
+  <button class="back-btn" onclick="hideSubPages()">Back</button>
+  <div class="sub-page-title">
+    <div class="excl-icon">!</div>
+    <span>Urgent Emergency Requested</span>
+  </div>
+  <div class="emergency-wrap" id="emergency-requests-container">
+  </div>
+</div>
+
+<div class="sub-page" id="sub-incidents">
+  <button class="back-btn" onclick="hideSubPages()">Back</button>
+  <div class="sub-page-title">
+    <div class="excl-icon">!</div>
+    <span>Reported Incidents</span>
+  </div>
+  <div class="incidents-wrap" id="incidents-container">
+  </div>
+  <div class="incident-pagination">
+    <div class="dots" id="incident-dots"></div>
+    <button class="prev-btn" id="prev-incident" onclick="changeIncidentPage(-1)" style="display:none;">Back</button>
+    <button class="next-btn" id="next-incident" onclick="changeIncidentPage(1)">Next</button>
+  </div>
+</div>
+
+<div class="alarm-overlay" id="alarm-overlay">
+  <div class="alarm-modal">
+    <div class="alarm-modal-header">
+      <button class="view-prev-btn" onclick="viewPreviousAlarms()">View Previous</button>
+      <button class="exit-btn" onclick="closeAlarm()">Exit</button>
+    </div>
+    <div class="alarm-title">
+      <div class="excl-icon">!</div>
+      <span>Announce Emergency Alarm</span>
+    </div>
+    <form id="alarm-form" onsubmit="announceAlarm(event)">
+      <div class="alarm-form-row">
+        <div class="alarm-form-group">
+          <label>Type of Emergency Alarm</label>
+          <select class="alarm-select" id="alarm-type" required>
+            <option value="">Select</option>
+            <option value="Fire">Fire</option>
+            <option value="Earthquake">Earthquake</option>
+            <option value="Flood">Flood</option>
+            <option value="Lockdown">Lockdown</option>
+            <option value="Medical">Medical</option>
+          </select>
+        </div>
+        <div class="alarm-form-group">
+          <label>Time Occurred</label>
+          <input type="text" class="alarm-time-input" id="alarm-time" required>
+        </div>
+      </div>
+      <label class="alarm-desc-label">Description:</label>
+      <textarea class="alarm-textarea" id="alarm-description" placeholder="" required></textarea>
+      <button type="submit" class="announce-btn">Announce</button>
+    </form>
+  </div>
+</div>
+
+<div class="alarm-overlay" id="student-info-modal">
+  <div class="info-modal">
+    <div class="info-modal-header">
+      <div class="info-modal-title">
+        <div class="excl-icon">!</div>
+        <span id="info-modal-title-text">STUDENT INFORMATION</span>
+      </div>
+      <button class="info-exit-btn" onclick="closeStudentInfo()">EXIT</button>
+    </div>
+    <div class="info-grid" id="student-info-grid">
+    </div>
+    <div class="info-description" id="request-description-container">
+    </div>
+  </div>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+<script>
+let medicineRequests = [
+  {
+    id: 1,
+    student: 'Wabe',
+    medicine: 'Paracetamol',
+    time: 'Today 10:05 AM',
+    date: '01 / 31 / 2026',
+    studentInfo: {
+      firstName: 'John',
+      lastName: 'Wabe',
+      gender: 'Male',
+      section: 'A',
+      grade: '11',
+      initial: 'J'
+    }
+  },
+  {
+    id: 2,
+    student: 'Guimba',
+    medicine: 'Decolgen',
+    time: 'Today 9:30 AM',
+    date: '01 / 31 / 2026',
+    studentInfo: {
+      firstName: 'Maria',
+      lastName: 'Guimba',
+      gender: 'Female',
+      section: 'B',
+      grade: '10',
+      initial: 'M'
+    }
+  },
+  {
+    id: 3,
+    student: 'Gulane',
+    medicine: 'Alaxan',
+    time: 'Today 8:21 AM',
+    date: '01 / 31 / 2026',
+    studentInfo: {
+      firstName: 'Pedro',
+      lastName: 'Gulane',
+      gender: 'Male',
+      section: 'C',
+      grade: '12',
+      initial: 'P'
+    }
+  }
+];
+
+let emergencyRequests = [
+  {
+    id: 1,
+    student: 'Wabe',
+    time: 'Today 10:05 AM',
+    location: 'Building B',
+    date: '01 / 31 / 2026',
+    type: 'Medical',
+    description: 'Student collapsed during PE class',
+    studentInfo: {
+      firstName: 'John',
+      lastName: 'Wabe',
+      section: 'A',
+      grade: '11'
+    }
+  },
+  {
+    id: 2,
+    student: 'Guimba',
+    time: 'Today 9:30 AM',
+    location: 'Building A',
+    date: '01 / 31 / 2026',
+    type: 'Emergency',
+    description: 'Reported suspicious person',
+    studentInfo: {
+      firstName: 'Maria',
+      lastName: 'Guimba',
+      section: 'B',
+      grade: '10'
+    }
+  },
+  {
+    id: 3,
+    student: 'Gulane',
+    time: 'Today 8:21 AM',
+    location: 'Building C',
+    date: '01 / 31 / 2026',
+    type: 'Fire',
+    description: 'Smoke detected in laboratory',
+    studentInfo: {
+      firstName: 'Pedro',
+      lastName: 'Gulane',
+      section: 'C',
+      grade: '12'
+    }
+  }
+];
+
+let incidentReports = [
+  [
+    {
+      id: 1,
+      student: 'Wabe',
+      type: 'Violence',
+      time: '10:43 AM',
+      location: 'Building B',
+      room: '203',
+      floor: '2nd Floor',
+      date: '01 / 31 / 2026',
+      description: 'Physical altercation between students during lunch break',
+      personnelType: 'security'
+    },
+    {
+      id: 2,
+      student: 'Guimba',
+      type: 'Water Leak',
+      time: '9:03 AM',
+      location: 'Building A',
+      room: '202 Bathroom',
+      floor: '2nd Floor',
+      date: '01 / 31 / 2026',
+      description: 'Major water leak flooding the bathroom area',
+      personnelType: 'school'
+    }
+  ],
+  [
+    {
+      id: 3,
+      student: 'Gulane',
+      type: 'Missing Phone',
+      time: '10:43 AM',
+      location: 'Building B',
+      room: '205',
+      floor: '2nd Floor',
+      date: '01 / 30 / 2026',
+      description: 'Student reported missing phone from classroom',
+      personnelType: 'school'
+    }
+  ]
+];
+
+let currentIncidentPage = 0;
+let alarmHistory = [];
+
+function init() {
+  renderMedicineRequests();
+  renderEmergencyRequests();
+  renderIncidentReports();
+  setCurrentTime();
+}
+
+function setCurrentTime() {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const displayHours = hours % 12 || 12;
+  document.getElementById('alarm-time').value = `${displayHours}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+}
+
+function renderMedicineRequests() {
+  const container = document.getElementById('medicine-requests-container');
+  container.innerHTML = medicineRequests.map(req => `
+    <div class="medicine-card">
+      <div class="medicine-card-title">${req.time} : Student ${req.student} Request for ${req.medicine} Medicine</div>
+      <div class="medicine-card-actions">
+        <button class="view-student-btn" onclick="viewStudentInfo(${req.id}, 'medicine')">View Student<br>Info</button>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="date-text">${req.date}</span>
+          <div class="med-action-group">
+            <button class="approve-btn" onclick="approveMedicine(${req.id})">Approve</button>
+            <button class="decline-btn" onclick="declineMedicine(${req.id})">Decline</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderEmergencyRequests() {
+  const container = document.getElementById('emergency-requests-container');
+  container.innerHTML = emergencyRequests.map(req => `
+    <div class="emergency-card" id="emergency-${req.id}">
+      <button class="close-x" onclick="removeEmergency(${req.id})">✕</button>
+      <div class="emergency-card-title">${req.time} : Student ${req.student} Request a Emergency Assistance in ${req.location.substring(0, 10)}..</div>
+      <div class="emergency-card-actions">
+        <button class="more-details-btn" onclick="viewEmergencyDetails(${req.id})">More<br>Details</button>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="date-text">${req.date}</span>
+          <button class="accept-btn" onclick="acceptEmergency(${req.id})">Accept Request</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+
+function renderIncidentReports() {
+  const container = document.getElementById('incidents-container');
+  const currentPage = incidentReports[currentIncidentPage];
+  
+  container.innerHTML = currentPage.map(incident => `
+    <div class="incident-card" id="incident-${incident.id}">
+      <button class="close-x" onclick="removeIncident(${incident.id})">✕</button>
+      <div class="incident-card-text">At ${incident.time}, Student ${incident.student} Reported a ${incident.type} Incident on the ${incident.floor} of <span class="building-link" onclick="showBuildingInfo('${incident.location}')">${incident.location}</span> in Room ${incident.room}.</div>
+      <div class="incident-card-actions">
+        <button class="more-details-btn" onclick="viewIncidentDetails(${incident.id})">More Info</button>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="date-text">${incident.date}</span>
+          <button class="inform-btn ${incident.personnelType === 'school' ? 'dark' : ''}" onclick="informPersonnel(${incident.id}, '${incident.personnelType}')">Inform ${incident.personnelType === 'security' ? 'Security' : 'School'}<br>Personnel</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  
+  updateIncidentPagination();
+}
+
+function updateIncidentPagination() {
+  const dotsContainer = document.getElementById('incident-dots');
+  dotsContainer.innerHTML = incidentReports.map((_, idx) => 
+    `<div class="dot ${idx === currentIncidentPage ? 'active' : ''}" onclick="goToIncidentPage(${idx})"></div>`
+  ).join('');
+  
+  document.getElementById('prev-incident').style.display = currentIncidentPage > 0 ? 'block' : 'none';
+  document.getElementById('next-incident').style.display = currentIncidentPage < incidentReports.length - 1 ? 'block' : 'none';
+}
+
+function changeIncidentPage(direction) {
+  currentIncidentPage += direction;
+  if (currentIncidentPage < 0) currentIncidentPage = 0;
+  if (currentIncidentPage >= incidentReports.length) currentIncidentPage = incidentReports.length - 1;
+  renderIncidentReports();
+}
+
+function goToIncidentPage(page) {
+  currentIncidentPage = page;
+  renderIncidentReports();
+}
+
+
+function showSubPage(sub) {
+  document.getElementById('reports-menu').style.display = 'none';
+  document.querySelectorAll('.sub-page').forEach(s => s.classList.remove('active'));
+  document.getElementById('sub-' + sub).classList.add('active');
+}
+
+function hideSubPages() {
+  document.querySelectorAll('.sub-page').forEach(s => s.classList.remove('active'));
+  document.getElementById('reports-menu').style.display = 'block';
+}
+
+
+function viewStudentInfo(id, type) {
+  let info, title, description = '';
+  
+  if (type === 'medicine') {
+    const req = medicineRequests.find(r => r.id === id);
+    info = req.studentInfo;
+    title = 'STUDENT INFORMATION';
+    description = `<div class="info-description-label">REQUESTED MEDICINE</div>
+                   <div class="info-description-text">${req.medicine} - ${req.time}</div>`;
+  }
+  
+  document.getElementById('info-modal-title-text').textContent = title;
+  document.getElementById('student-info-grid').innerHTML = `
+    <div class="info-item">
+      <div class="info-label">FIRST NAME</div>
+      <div class="info-value">${info.firstName}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">LAST NAME</div>
+      <div class="info-value">${info.lastName}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">INITIAL</div>
+      <div class="info-value">${info.initial}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">GENDER</div>
+      <div class="info-value">${info.gender}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">SECTION</div>
+      <div class="info-value">${info.section}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">GRADE</div>
+      <div class="info-value">${info.grade}</div>
+    </div>
+  `;
+  document.getElementById('request-description-container').innerHTML = description;
+  document.getElementById('student-info-modal').classList.add('active');
+}
+
+function closeStudentInfo() {
+  document.getElementById('student-info-modal').classList.remove('active');
+}
+
+function approveMedicine(id) {
+  const index = medicineRequests.findIndex(r => r.id === id);
+  if (index !== -1) {
+    medicineRequests.splice(index, 1);
+    renderMedicineRequests();
+    showToast('Request Approved!');
+  }
+}
+
+function declineMedicine(id) {
+  const index = medicineRequests.findIndex(r => r.id === id);
+  if (index !== -1) {
+    medicineRequests.splice(index, 1);
+    renderMedicineRequests();
+    showToast('Request Declined.');
+  }
+}
+
+
+function viewEmergencyDetails(id) {
+  const req = emergencyRequests.find(r => r.id === id);
+  document.getElementById('info-modal-title-text').textContent = 'EMERGENCY INFO';
+  document.getElementById('student-info-grid').innerHTML = `
+    <div class="info-item">
+      <div class="info-label">TYPE</div>
+      <div class="info-value">${req.type}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">LOCATION</div>
+      <div class="info-value">${req.location}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">TIME</div>
+      <div class="info-value">${req.time}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">STUDENT</div>
+      <div class="info-value">${req.studentInfo.firstName} ${req.studentInfo.lastName}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">SECTION</div>
+      <div class="info-value">${req.studentInfo.section}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">GRADE</div>
+      <div class="info-value">${req.studentInfo.grade}</div>
+    </div>
+  `;
+  document.getElementById('request-description-container').innerHTML = `
+    <div class="info-description-label">DESCRIPTION</div>
+    <div class="info-description-text">${req.description}</div>
+  `;
+  document.getElementById('student-info-modal').classList.add('active');
+}
+
+function acceptEmergency(id) {
+  const index = emergencyRequests.findIndex(r => r.id === id);
+  if (index !== -1) {
+    emergencyRequests.splice(index, 1);
+    renderEmergencyRequests();
+    showToast('Request Accepted!');
+  }
+}
+
+function removeEmergency(id) {
+  const element = document.getElementById(`emergency-${id}`);
+  if (element) {
+    element.style.animation = 'slideOut 0.3s forwards';
+    setTimeout(() => {
+      const index = emergencyRequests.findIndex(r => r.id === id);
+      if (index !== -1) {
+        emergencyRequests.splice(index, 1);
+        renderEmergencyRequests();
+      }
+    }, 300);
+    showToast('Request removed.');
+  }
+}
+
+function viewIncidentDetails(id) {
+  const incident = incidentReports.flat().find(i => i.id === id);
+  document.getElementById('info-modal-title-text').textContent = 'INCIDENT DETAILS';
+  document.getElementById('student-info-grid').innerHTML = `
+    <div class="info-item">
+      <div class="info-label">TYPE</div>
+      <div class="info-value">${incident.type}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">LOCATION</div>
+      <div class="info-value">${incident.location}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">ROOM</div>
+      <div class="info-value">${incident.room}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">TIME</div>
+      <div class="info-value">${incident.time}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">REPORTED BY</div>
+      <div class="info-value">${incident.student}</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">DATE</div>
+      <div class="info-value">${incident.date}</div>
+    </div>
+  `;
+  document.getElementById('request-description-container').innerHTML = `
+    <div class="info-description-label">DESCRIPTION</div>
+    <div class="info-description-text">${incident.description}</div>
+  `;
+  document.getElementById('student-info-modal').classList.add('active');
+}
+
+function removeIncident(id) {
+  const element = document.getElementById(`incident-${id}`);
+  if (element) {
+    element.style.animation = 'slideOut 0.3s forwards';
+    setTimeout(() => {
+      incidentReports = incidentReports.map(page => page.filter(i => i.id !== id)).filter(page => page.length > 0);
+      if (currentIncidentPage >= incidentReports.length) {
+        currentIncidentPage = Math.max(0, incidentReports.length - 1);
+      }
+      renderIncidentReports();
+    }, 300);
+  }
+}
+
+function informPersonnel(id, type) {
+  const personnelType = type === 'security' ? 'Security Personnel' : 'School Personnel';
+  showToast(`${personnelType} Informed!`);
+}
+
+function showBuildingInfo(building) {
+  showToast(`${building} location displayed on map`);
+}
+
+
+function openAlarm() {
+  document.getElementById('alarm-overlay').classList.add('active');
+  setCurrentTime();
+}
+
+function closeAlarm() {
+  document.getElementById('alarm-overlay').classList.remove('active');
+}
+
+function announceAlarm(event) {
+  event.preventDefault();
+  const type = document.getElementById('alarm-type').value;
+  const time = document.getElementById('alarm-time').value;
+  const description = document.getElementById('alarm-description').value;
+  
+  alarmHistory.push({type, time, description, timestamp: new Date()});
+  
+  showToast('Emergency alarm announced!');
+  document.getElementById('alarm-form').reset();
+  closeAlarm();
+}
+
+function viewPreviousAlarms() {
+  if (alarmHistory.length === 0) {
+    showToast('No previous alarms');
+    return;
+  }
+  
+  const lastAlarm = alarmHistory[alarmHistory.length - 1];
+  showToast(`Last alarm: ${lastAlarm.type} at ${lastAlarm.time}`);
+}
+
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+function logout() {
+  if (confirm('Are you sure you want to logout?')) {
+    window.location.href = 'login.html';
+  }
+}
+
+
+document.querySelectorAll('.alarm-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('active');
+    }
+  });
+});
+
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+
+<style>
+@keyframes slideOut {
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+</style>
+
+</body>
+</html>

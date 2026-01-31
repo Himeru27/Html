@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CNHS Safety Portal - History</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #fef3e4;
+    margin: 0;
+  }
+  .header {
+    background-color: #ff7f50;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+  .header-text {
+    margin-left: 15px;
+    color: white;
+  }
+  .main-title {
+    font-weight: bold;
+    font-size: 20px;
+  }
+  .subtitle {
+    font-size: 12px;
+  }
+  .admin-info {
+    display: flex;
+    align-items: center;
+  }
+  .admin-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #ffe4b2;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  .admin-details {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: white;
+  }
+  .navbar-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background-color: #e9ecef;
+    padding: 8px 0;
+  }
+  .content {
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+
+<div class="header">
+  <div class="header-left d-flex align-items-center">
+    <img src="https://via.placeholder.com/60" alt="Logo" class="logo"/>
+    <div class="header-text ms-3">
+      <div class="main-title">CNHS SAFETY PORTAL</div>
+      <div class="subtitle">INTEGRATED WITH EMERGENCY ALARM AND INCIDENT REPORTS</div>
+    </div>
+  </div>
+  <div class="admin-info">
+    <div class="admin-avatar d-flex justify-content-center align-items-center">
+      <i class="fas fa-user"></i>
+    </div>
+    <div class="admin-details">
+      <div><strong>ADMIN NAME</strong></div>
+      <div>ROLE TITLE</div>
+      <div>ID: 012345678</div>
+    </div>
+    <button class="btn btn-danger btn-sm ms-3">LOGOUT</button>
+  </div>
+</div>
+
+
+<div class="navbar-container">
+  <a href="index.html" class="btn btn-outline-primary btn-sm">HOME</a>
+  <a href="reports.html" class="btn btn-outline-primary btn-sm">REPORTS & REQUESTS</a>
+  <a href="history.html" class="btn btn-outline-primary btn-sm">HISTORY</a>
+  <a href="profile.html" class="btn btn-outline-primary btn-sm">PROFILE</a>
+</div>
+
+
+<div class="content container-fluid">
+  <h2>Requests & Declined Requests History</h2>
+  <ul class="list-group mb-4">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Student Gulane Request a Emergency Assistance
+      <button class="btn btn-sm btn-danger">Delete</button>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      Student Wabe Request for Paracetamol Medicine
+      <button class="btn btn-sm btn-danger">Delete</button>
+    </li>
+  </ul>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

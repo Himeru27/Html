@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CNHS Safety Portal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Oswald', sans-serif;
+    background: #f5ebe0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: #F07A20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 28px;
+    min-height: 90px;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #d4a030;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .logo-circle svg {
+    width: 58px;
+    height: 58px;
+  }
+  .header-title {
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    letter-spacing: 2px;
+    text-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+  }
+  .header-right {
+    background: #fdf0d5;
+    border-radius: 12px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .admin-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f0c060;
+    border: 3px solid #e8a830;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-avatar svg {
+    width: 26px;
+    height: 26px;
+    fill: #c07020;
+  }
+  .admin-info {
+    text-align: left;
+  }
+  .admin-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #222;
+    text-transform: uppercase;
+  }
+  .admin-role {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #F07A20;
+    text-transform: uppercase;
+  }
+  .admin-id {
+    font-size: 11px;
+    color: #888;
+    font-weight: 500;
+  }
+  .logout-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+  }
+  .logout-btn:hover { background: #c62a36; }
+
+  /* ===== NAV ===== */
+  .nav {
+    display: flex;
+    gap: 0;
+    padding: 0 28px;
+    background: #fff;
+    border-bottom: 1px solid #e8ddd0;
+  }
+  .nav-item {
+    padding: 14px 32px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    letter-spacing: 0.5px;
+    border: none;
+    background: none;
+  }
+  .nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #F07A20;
+    border-radius: 2px 2px 0 0;
+  }
+  .nav-item:hover { color: #F07A20; }
+
+  /* ===== PAGE CONTAINERS ===== */
+  .page { display: none; padding: 28px; min-height: calc(100vh - 140px); }
+  .page.active { display: block; }
+
+  /* ===== HOME PAGE ===== */
+  .home-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 180px);
+  }
+  .home-card {
+    background: #fde8c8;
+    border-radius: 18px;
+    padding: 40px 50px;
+    width: 440px;
+    text-align: center;
+  }
+  .home-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .home-card-title .excl-icon {
+    width: 28px;
+    height: 28px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 18px;
+  }
+  .home-card-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #333;
+  }
+  .home-option {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+    cursor: pointer;
+  }
+  .home-option-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .home-option-icon svg { width: 48px; height: 48px; }
+  .home-option-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 22px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    text-align: left;
+  }
+  .home-option-btn:hover { background: #d04530; }
+  .home-option-btn.medicine { background: #F07A20; }
+  .home-option-btn.medicine:hover { background: #d96a1a; }
+  .home-option-btn.alarm { background: #e8573b; }
+
+  /* ===== ADMIN TAB PAGE ===== */
+  .admin-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .add-user-btn {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+  }
+  .add-user-btn:hover { background: #43a047; }
+
+  .users-tab-label {
+    background: #fde8c8;
+    border-radius: 8px;
+    padding: 10px 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #333;
+  }
+  .users-tab-label .excl-icon {
+    width: 22px;
+    height: 22px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 13px;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 2px solid #222;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-left: auto;
+  }
+  .search-label {
+    background: #222;
+    color: #fff;
+    padding: 10px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+  .search-box input {
+    border: none;
+    outline: none;
+    padding: 10px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    width: 160px;
+  }
+  .search-icon {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+  }
+
+  /* Table */
+  .table-container {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e0d5c5;
+  }
+  .table-nav {
+    display: flex;
+    align-items: center;
+    background: #eee;
+    padding: 10px 16px;
+  }
+  .table-nav-arrow {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #555;
+    cursor: pointer;
+    padding: 0 6px;
+  }
+  .table-nav-arrow:hover { color: #F07A20; }
+  .table-title {
+    flex: 1;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: #222;
+  }
+  .scrollbar-hint {
+    width: 6px;
+    height: 60px;
+    background: #F07A20;
+    border-radius: 3px;
+    position: absolute;
+    right: 0;
+    top: 30px;
+  }
+  .table-wrap {
+    position: relative;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table th {
+    background: #d0c8be;
+    padding: 11px 10px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #333;
+    text-align: center;
+    border-bottom: 1px solid #c0b8a8;
+  }
+  table td {
+    padding: 13px 10px;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #f0ebe3;
+  }
+  table tr:last-child td { border-bottom: none; }
+  .action-btns { display: flex; gap: 8px; justify-content: center; }
+  .action-edit, .action-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 2px;
+  }
+  .action-edit { color: #888; }
+  .action-edit:hover { color: #F07A20; }
+  .action-delete { color: #F07A20; }
+  .action-delete:hover { color: #e63946; }
+
+  /* Select Section Dropdown */
+  .select-section {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+  }
+  .select-section option { color: #333; background: #fff; }
+
+  /* ===== REPORTS & REQUESTS ===== */
+  .reports-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 180px);
+  }
+  .reports-card {
+    background: #fde8c8;
+    border-radius: 18px;
+    padding: 36px 48px;
+    width: 420px;
+  }
+  .reports-card-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .reports-card-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #333;
+  }
+  .reports-option {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 22px;
+    cursor: pointer;
+  }
+  .reports-option-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .reports-option-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1.3;
+  }
+  .reports-option-btn:hover { background: #d96a1a; }
+  .reports-option-btn.red { background: #e8573b; }
+  .reports-option-btn.red:hover { background: #d04530; }
+  .reports-option-btn.dark-red { background: #c0392b; }
+  .reports-option-btn.dark-red:hover { background: #a93226; }
+
+  /* ===== MEDICINE REQUESTS ===== */
+  .sub-page { display: none; }
+  .sub-page.active { display: block; }
+
+  .back-btn {
+    background: #5dade2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 22px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  .back-btn:hover { background: #4a9cc4; }
+
+  .sub-page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .sub-page-title .excl-icon {
+    width: 26px;
+    height: 26px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 16px;
+  }
+  .sub-page-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 21px;
+    text-transform: uppercase;
+    color: #333;
+  }
+
+  /* Medicine Request Cards */
+  .medicine-card {
+    background: #fde8c8;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+  .medicine-card-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #e8573b;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .medicine-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .view-student-btn {
+    background: #f0c060;
+    color: #333;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1.3;
+  }
+  .view-student-btn:hover { background: #e0b050; }
+  .date-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    color: #999;
+  }
+  .approve-btn {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .approve-btn:hover { background: #43a047; }
+  .decline-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .decline-btn:hover { background: #d04530; }
+  .med-action-group { display: flex; gap: 8px; }
+
+  /* Emergency Requests */
+  .emergency-wrap {
+    background: #f8c8c8;
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .emergency-card {
+    background: #fdd8d0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .emergency-card-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #e8573b;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-right: 28px;
+  }
+  .emergency-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .more-details-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1.3;
+  }
+  .more-details-btn:hover { background: #d96a1a; }
+  .accept-btn {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 18px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .accept-btn:hover { background: #43a047; }
+  .close-x {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 28px;
+    height: 28px;
+    background: #e8573b;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .close-x:hover { background: #d04530; }
+
+  /* Incident Reports */
+  .incidents-wrap {
+    background: #fde8c8;
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .incident-card {
+    background: #fff8f0;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .incident-card-text {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-right: 28px;
+    line-height: 1.4;
+  }
+  .incident-card-text .building-link {
+    color: #e8573b;
+    font-weight: 700;
+  }
+  .incident-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .inform-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 1.3;
+    text-align: center;
+  }
+  .inform-btn:hover { background: #d04530; }
+  .inform-btn.dark { background: #333; }
+  .inform-btn.dark:hover { background: #222; }
+  .incident-pagination {
+    text-align: center;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .dots { display: flex; gap: 6px; }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #ccc;
+  }
+  .dot.active { background: #e8573b; }
+  .next-btn, .prev-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 28px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .next-btn:hover, .prev-btn:hover { background: #d04530; }
+
+  /* ===== EMERGENCY ALARM ===== */
+  .alarm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  .alarm-overlay.active { display: flex; }
+  .alarm-modal {
+    background: #f0f0f0;
+    border-radius: 16px;
+    padding: 30px 36px 36px;
+    width: 520px;
+    position: relative;
+  }
+  .alarm-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+  .view-prev-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .view-prev-btn:hover { background: #d96a1a; }
+  .exit-btn {
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .exit-btn:hover { background: #c62a36; }
+  .alarm-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .alarm-title .excl-icon {
+    width: 28px;
+    height: 28px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 17px;
+  }
+  .alarm-title span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: #222;
+  }
+  .alarm-form-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .alarm-form-group { flex: 1; }
+  .alarm-form-group label {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .alarm-select {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    width: 100%;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23fff' d='M7 10L1 4h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 38px;
+  }
+  .alarm-select option { color: #333; background: #fff; }
+  .alarm-time-input {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    width: 100%;
+    background: #fff;
+    color: #333;
+  }
+  .alarm-desc-label {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+    display: block;
+    letter-spacing: 0.5px;
+  }
+  .alarm-textarea {
+    width: 100%;
+    height: 110px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    background: #fff;
+  }
+  .alarm-textarea:focus { border-color: #F07A20; }
+  .announce-btn {
+    display: block;
+    width: 180px;
+    margin: 24px auto 0;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .announce-btn:hover { background: #333; }
+
+  /* ===== HISTORY PAGE ===== */
+  .history-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .date-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .date-input-wrap label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    color: #888;
+    font-weight: 600;
+  }
+  .date-input {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    background: #fff;
+  }
+  .history-title-bar {
+    background: #fde8c8;
+    border-radius: 8px;
+    padding: 9px 22px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #333;
+  }
+  .history-title-bar .excl-icon {
+    width: 22px;
+    height: 22px;
+    background: #F07A20;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 900;
+    font-size: 13px;
+  }
+
+  .history-card {
+    background: #fde8c8;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .history-card-badge {
+    display: inline-block;
+    background: #e8573b;
+    color: #fff;
+    border-radius: 6px;
+    padding: 3px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .history-card-badge.medicine { background: #F07A20; }
+  .history-card-text {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: #333;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .history-card-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .view-details-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .view-details-btn:hover { background: #d96a1a; }
+  .delete-btn {
+    background: #e8573b;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .delete-btn:hover { background: #d04530; }
+  .history-card-right { display: flex; align-items: center; gap: 12px; }
+
+  /* ===== PROFILE PAGE ===== */
+  .profile-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 180px);
+  }
+  .profile-card {
+    background: #f5dfa0;
+    border-radius: 20px;
+    padding: 40px 50px;
+    width: 500px;
+    text-align: center;
+    border: 4px solid #e8c840;
+  }
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #f0c060;
+    border: 5px solid #e8a830;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .profile-avatar svg {
+    width: 60px;
+    height: 60px;
+    fill: #c07020;
+  }
+  .profile-fields {
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 26px;
+  }
+  .profile-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .profile-field .edit-icon {
+    width: 22px;
+    height: 22px;
+    background: #F07A20;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .profile-field .edit-icon svg { width: 14px; height: 14px; fill: #fff; }
+  .profile-field span {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #F07A20;
+    text-transform: uppercase;
+  }
+  .change-pw-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 auto 22px;
+  }
+  .change-pw-btn:hover { background: #d96a1a; }
+  .change-pw-btn svg { width: 16px; height: 16px; fill: #fff; }
+  .save-btn {
+    background: #F07A20;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 36px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+  }
+  .save-btn:hover { background: #d96a1a; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #333;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo-circle">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" fill="#2e7d32" stroke="#1b5e20" stroke-width="3"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="#ffcc00" stroke-width="2.5" stroke-dasharray="6 3"/>
+        <text x="50" y="38" text-anchor="middle" font-size="9" fill="#fff" font-family="serif" font-weight="bold">CAGAYAN</text>
+        <text x="50" y="48" text-anchor="middle" font-size="7" fill="#ffcc00" font-family="serif">NATIONAL HIGH</text>
+        <text x="50" y="56" text-anchor="middle" font-size="7" fill="#ffcc00" font-family="serif">SCHOOL</text>
+        <text x="50" y="68" text-anchor="middle" font-size="6" fill="#fff" font-family="serif">Est. 1950</text>
+        <rect x="42" y="72" width="16" height="10" rx="2" fill="#ffcc00"/>
+        <text x="50" y="80" text-anchor="middle" font-size="6" fill="#1b5e20" font-family="serif" font-weight="bold">FOUNDED</text>
+      </svg>
+    </div>
+    <div class="header-title">CNHS SAFETY PORTAL</div>
+  </div>
+  <div class="header-right">
+    <div class="admin-avatar">
+      <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    </div>
+    <div class="admin-info">
+      <div class="admin-name">Admin Name</div>
+      <div class="admin-role">Role Title</div>
+      <div class="admin-id">ID: 012345678</div>
+    </div>
+    <button class="logout-btn">Logout</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-item active" onclick="showPage('home')">Home</button>
+  <button class="nav-item" onclick="showPage('reports')">Reports &amp; Requests</button>
+  <button class="nav-item" onclick="showPage('history')">History</button>
+  <button class="nav-item" onclick="showPage('profile')">Profile</button>
+</div>
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
+  <div class="home-content">
+    <div class="home-card">
+      <div class="home-card-title">
+        <div class="excl-icon">!</div>
+        <span>Manage Reports &amp; Request</span>
+      </div>
+      <div class="home-option">
+        <div class="home-option-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="10" width="28" height="22" rx="4" fill="#F07A20"/>
+            <circle cx="32" cy="8" r="6" fill="#e63946"/>
+            <circle cx="32" cy="8" r="3" fill="#fff"/>
+            <text x="18" y="26" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">...</text>
+          </svg>
+        </div>
+        <button class="home-option-btn medicine" onclick="showPage('reports'); showSubPage('medicine')">View Medicine<br>Requests</button>
+      </div>
+      <div class="home-option">
+        <div class="home-option-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4 L44 28 L4 28 Z" fill="#f0c060"/>
+            <rect x="20" y="18" width="8" height="10" rx="1" fill="#e63946"/>
+            <rect x="22" y="12" width="4" height="6" rx="1" fill="#e63946"/>
+          </svg>
+        </div>
+        <button class="home-option-btn red" onclick="showPage('reports'); showSubPage('emergency')">View Emergency<br>Requests</button>
+      </div>
+      <div class="home-option">
+        <div class="home-option-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 6 L42 38 L6 38 Z" fill="#f0c060" stroke="#e8a830" stroke-width="2"/>
+            <text x="24" y="34" text-anchor="middle" font-size="18" fill="#e8573b" font-family="sans-serif" font-weight="bold">!</text>
+          </svg>
+        </div>
+        <button class="home-option-btn red" onclick="showPage('reports'); showSubPage('incidents')">View Incident<br>Reports</button>
+      </div>
+      <div class="home-option">
+        <div class="home-option-icon">
+          <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 24 L16 16 L16 20 L32 14 L32 18 L40 12 L40 32 L8 32 Z" fill="#F07A20"/>
+            <path d="M32 18 L32 14 L40 12 L40 20 Z" fill="#d96a1a"/>
+          </svg>
+        </div>
+        <button class="home-option-btn alarm" onclick="openAlarm()">Announce<br>Emergency Alarm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REPORTS & REQUESTS PAGE ===== -->
+<div class="page" id="page-reports">
+  <!-- Reports Menu (shown when no sub-page active) -->
+  <div id="reports-menu">
+    <div class="reports-menu">
+      <div class="reports-card">
+        <div class="reports-card-title">
+          <div class="excl-icon" style="width:26px;height:26px;background:#F07A20;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;">!</div>
+          <span>Manage Reports &amp; Request</span>
+        </div>
+        <div class="reports-option">
+          <div class="reports-option-icon">
+            <svg viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="28" height="22" rx="4" fill="#F07A20"/><circle cx="32" cy="8" r="6" fill="#e63946"/><circle cx="32" cy="8" r="3" fill="#fff"/><text x="18" y="26" text-anchor="middle" font-size="10" fill="#fff" font-family="sans-serif">...</text></svg>
+          </div>
+          <button class="reports-option-btn" onclick="showSubPage('medicine')">View Medicine<br>Requests</button>
+        </div>
+        <div class="reports-option">
+          <div class="reports-option-icon">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 4 L44 28 L4 28 Z" fill="#f0c060"/><rect x="20" y="18" width="8" height="10" rx="1" fill="#e63946"/><rect x="22" y="12" width="4" height="6" rx="1" fill="#e63946"/></svg>
+          </div>
+          <button class="reports-option-btn red" onclick="showSubPage('emergency')">View Emergency<br>Requests</button>
+        </div>
+        <div class="reports-option">
+          <div class="reports-option-icon">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 6 L42 38 L6 38 Z" fill="#f0c060" stroke="#e8a830" stroke-width="2"/><text x="24" y="34" text-anchor="middle" font-size="18" fill="#e8573b" font-family="sans-serif" font-weight="bold">!</text></svg>
+          </div>
+          <button class="reports-option-btn red" onclick="showSubPage('incidents')">View Incident<br>Reports</button>
+        </div>
+        <div class="reports-option">
+          <div class="reports-option-icon">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M8 24 L16 16 L16 20 L32 14 L32 18 L40 12 L40 32 L8 32 Z" fill="#F07A20"/><path d="M32 18 L32 14 L40 12 L40 20 Z" fill="#d96a1a"/></svg>
+          </div>
+          <button class="reports-option-btn dark-red" onclick="openAlarm()">Announce<br>Emergency Alarm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Medicine Sub-page -->
+  <div class="sub-page" id="sub-medicine">
+    <button class="back-btn" onclick="hideSubPages()">Back</button>
+    <div class="sub-page-title">
+      <div class="excl-icon" style="width:26px;height:26px;background:#F07A20;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;">!</div>
+      <span>Student Medicine Requested</span>
+    </div>
+    <div class="medicine-card">
+      <div class="medicine-card-title">Today 10:05 AM : Student Wabe Request for Paracetamol Medicine</div>
+      <div class="medicine-card-actions">
+        <button class="view-student-btn">View Student<br>Info</button>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="date-text">MM / DD / YYYY</span>
+          <div class="med-action-group">
+            <button class="approve-btn" onclick="showToast('Request Approved!')">Approve</button>
+            <button class="decline-btn" onclick="showToast('Request Declined.')">Decline</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="medicine-card">
+      <div class="medicine-card-title">Today 9:30 AM : Student Guimba Request for Decolgen Medicine</div>
+      <div class="medicine-card-actions">
+        <button class="view-student-btn">View Student<br>Info</button>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="date-text">MM / DD / YYYY</span>
+          <div class="med-action-group">
+            <button class="approve-btn" onclick="showToast('Request Approved!')">Approve</button>
+            <button class="decline-btn" onclick="showToast('Request Declined.')">Decline</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="medicine-card">
+      <div class="medicine-card-title">Today 8:21 AM : Student Gulane Request for Alaxan Medicine</div>
+      <div class="medicine-card-actions">
+        <button class="view-student-btn">View Student<br>Info</button>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span class="date-text">MM / DD / YYYY</span>
+          <div class="med-action-group">
+            <button class="approve-btn" onclick="showToast('Request Approved!')">Approve</button>
+            <button class="decline-btn" onclick="showToast('Request Declined.')">Decline</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emergency Sub-page -->
+  <div class="sub-page" id="sub-emergency">
+    <button class="back-btn" onclick="hideSubPages()">Back</button>
+    <div class="sub-page-title">
+      <div class="excl-icon" style="width:26px;height:26px;background:#F07A20;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;">!</div>
+      <span>Urgents Emergency Requested</span>
+    </div>
+    <div class="emergency-wrap">
+      <div class="emergency-card">
+        <button class="close-x" onclick="this.parentElement.remove(); showToast('Request removed.')">✕</button>
+        <div class="emergency-card-title">Today 10:05 AM : Student Wabe Request a Emergency Assistance in B..</div>
+        <div class="emergency-card-actions">
+          <button class="more-details-btn">More<br>Details</button>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="date-text">MM / DD / YYYY</span>
+            <button class="accept-btn" onclick="showToast('Request Accepted!')">Accept Request</button>
+          </div>
+        </div>
+      </div>
+      <div class="emergency-card">
+        <button class="close-x" onclick="this.parentElement.remove(); showToast('Request removed.')">✕</button>
+        <div class="emergency-card-title">Today 9:30 AM : Student Guimba Request a Emergency Assistance in B..</div>
+        <div class="emergency-card-actions">
+          <button class="more-details-btn">More<br>Details</button>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="date-text">MM / DD / YYYY</span>
+            <button class="accept-btn" onclick="showToast('Request Accepted!')">Accept Request</button>
+          </div>
+        </div>
+      </div>
+      <div class="emergency-card">
+        <button class="close-x" onclick="this.parentElement.remove(); showToast('Request removed.')">✕</button>
+        <div class="emergency-card-title">Today 8:21 AM : Student Gulane Request a Emergency Assistance in B..</div>
+        <div class="emergency-card-actions">
+          <button class="more-details-btn">More<br>Details</button>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="date-text">MM / DD / YYYY</span>
+            <button class="accept-btn" onclick="showToast('Request Accepted!')">Accept Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Incidents Sub-page -->
+  <div class="sub-page" id="sub-incidents">
+    <button class="back-btn" onclick="hideSubPages()">Back</button>
+    <div class="sub-page-title">
+      <div class="excl-icon" style="width:26px;height:26px;background:#F07A20;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;">!</div>
+      <span>Reported Incidents</span>
+    </div>
+    <div class="incidents-wrap" id="incidents-page1">
+      <div class="incident-card">
+        <button class="close-x" onclick="this.parentElement.remove();">✕</button>
+        <div class="incident-card-text">At 10:43 AM, Student Wabe Reported a Violence Incident on the 2nd Floo.. of <span class="building-link">Building B</span> in Room 203.</div>
+        <div class="incident-card-actions">
+          <button class="more-details-btn">More Info</button>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="date-text">MM / DD / YYYY</span>
+            <button class="inform-btn" onclick="showToast('Security Personnel Informed!')">Inform Security<br>Personalle</button>
+          </div>
+        </div>
+      </div>
+      <div class="incident-card">
+        <button class="close-x" onclick="this.parentElement.remove();">✕</button>
+        <div class="incident-card-text">At 9:03 AM, Student Guimba Reported a Water Leak Incident on the 2nd Floor <span class="building-link">Building A</span> in Room 202 Bathroom.</div>
+        <div class="incident-card-actions">
+          <button class="more-details-btn">More Info</button>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="date-text">MM / DD / YYYY</span>
+            <button class="inform-btn dark" onclick="showToast('School Personnel Informed!')">Inform School<br>Personalle</button>
+          </div>
+        </div>
+      </div>
+      <div class="incident-pagination">
+        <div class="dots"><div class="dot active"></div><div class="dot"></div></div>
+        <button class="next-btn" onclick="switchIncidentPage(2)">Next</button>
+      </div>
+    </div>
+    <div class="incidents-wrap" id="incidents-page2" style="display:none;">
+      <div class="incident-card">
+        <button class="close-x" onclick="this.parentElement.remove();">✕</button>
+        <div class="incident-card-text">Yesterday at 10:43 AM, Student Gulane Reported a Missing Phone on th.. 2nd Floor of <span class="building-link">Building B</span> in Room 205.</div>
+        <div class="incident-card-actions">
+          <button class="more-details-btn">More Info</button>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="date-text">MM / DD / YYYY</span>
+            <button class="inform-btn dark" onclick="showToast('School Personnel Informed!')">Inform School<br>Personalle</button>
+          </div>
+        </div>
+      </div>
+      <div class="incident-pagination">
+        <div class="dots"><div class="dot"></div><div class="dot active"></div></div>
+        <button class="prev-btn" onclick="switchIncidentPage(1)">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HISTORY PAGE ===== -->
+<div class="page" id="page-history">
+  <div class="history-controls">
+    <div class="date-input-wrap">
+      <label>Specific date:</label>
+      <input type="date" class="date-input">
+    </div>
+    <div class="history-title-bar">
+      <div class="excl-icon">!</div>
+      Removed &amp; Declined Requests History
+    </div>
+    <div class="search-box" style="margin-left:auto;">
+      <div class="search-label">Search</div>
+      <input type="text" placeholder="">
+      <div class="search-icon">🔍</div>
+    </div>
+  </div>
+  <div class="history-card">
+    <div class="history-card-badge">Emergency</div>
+    <div class="history-card-text">Today 8:21 AM : Student Gulane Request a Emergency Assistance in B..</div>
+    <div class="history-card-actions">
+      <button class="view-details-btn">View Details</button>
+      <div class="history-card-right">
+        <span class="date-text">MM / DD / YYYY</span>
+        <button class="delete-btn" onclick="showToast('Record deleted.')">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div class="history-card">
+    <div class="history-card-badge medicine">Medicine</div>
+    <div class="history-card-text">Today 10:05 AM : Student Wabe Request for Paracetamol Medicine</div>
+    <div class="history-card-actions">
+      <button class="view-details-btn">View Details</button>
+      <div class="history-card-right">
+        <span class="date-text">MM / DD / YYYY</span>
+        <button class="delete-btn" onclick="showToast('Record deleted.')">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div class="history-card">
+    <div class="history-card-badge medicine">Medicine</div>
+    <div class="history-card-text">Today 9:30 AM : Student Guimba Request for Decolgen Medicine</div>
+    <div class="history-card-actions">
+      <button class="view-details-btn">View Details</button>
+      <div class="history-card-right">
+        <span class="date-text">MM / DD / YYYY</span>
+        <button class="delete-btn" onclick="showToast('Record deleted.')">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ADMIN TAB (HOME sub-section accessible via nav) ===== -->
+<!-- We embed the admin/users tables into a separate hidden page toggled by Home sub-nav -->
+<div class="page" id="page-admin">
+  <div class="admin-controls">
+    <button class="add-user-btn" onclick="showToast('Add User form opened.')">Add User</button>
+    <div class="users-tab-label">
+      <div class="excl-icon">!</div>
+      Users Tab
+    </div>
+    <div class="search-box">
+      <div class="search-label">Search</div>
+      <input type="text" placeholder="">
+      <div class="search-icon">🔍</div>
+    </div>
+  </div>
+
+  <!-- Table Navigator Buttons -->
+  <div style="display:flex;gap:8px;margin-bottom:10px;">
+    <button onclick="showAdminTable('admin')" id="btn-admin" style="background:#F07A20;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-family:'Oswald',sans-serif;font-weight:700;font-size:13px;cursor:pointer;text-transform:uppercase;">Admin</button>
+    <button onclick="showAdminTable('security')" id="btn-security" style="background:#ccc;color:#333;border:none;border-radius:6px;padding:6px 14px;font-family:'Oswald',sans-serif;font-weight:700;font-size:13px;cursor:pointer;text-transform:uppercase;">Security</button>
+    <button onclick="showAdminTable('faculty')" id="btn-faculty" style="background:#ccc;color:#333;border:none;border-radius:6px;padding:6px 14px;font-family:'Oswald',sans-serif;font-weight:700;font-size:13px;cursor:pointer;text-transform:uppercase;">Faculty</button>
+    <button onclick="showAdminTable('student')" id="btn-student" style="background:#ccc;color:#333;border:none;border-radius:6px;padding:6px 14px;font-family:'Oswald',sans-serif;font-weight:700;font-size:13px;cursor:pointer;text-transform:uppercase;">Student</button>
+  </div>
+
+  <!-- Admin Table -->
+  <div class="table-container table-wrap" id="table-admin">
+    <div class="table-nav">
+      <button class="table-nav-arrow">◀</button>
+      <div class="table-title">Admin Table</div>
+    </div>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Role</th><th>First Name</th><th>Last Name</th><th>Initial</th><th>Gender</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+      </tbody>
+    </table>
+    <div class="scrollbar-hint"></div>
+  </div>
+
+  <!-- Security Table -->
+  <div class="table-container table-wrap" id="table-security" style="display:none;">
+    <div class="table-nav">
+      <button class="table-nav-arrow">◀</button>
+      <div class="table-title">Campus Security Personnel Table</div>
+      <button class="table-nav-arrow">▶</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Role</th><th>First Name</th><th>Last Name</th><th>Initial</th><th>Gender</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+      </tbody>
+    </table>
+    <div class="scrollbar-hint"></div>
+  </div>
+
+  <!-- Faculty Table -->
+  <div class="table-container table-wrap" id="table-faculty" style="display:none;">
+    <div class="table-nav">
+      <button class="table-nav-arrow">◀</button>
+      <div class="table-title">Faculty Member Table</div>
+      <button class="table-nav-arrow">▶</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Role</th><th>First Name</th><th>Last Name</th><th>Initial</th><th>Gender</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+      </tbody>
+    </table>
+    <div class="scrollbar-hint"></div>
+  </div>
+
+  <!-- Student Table -->
+  <div class="table-container table-wrap" id="table-student" style="display:none;">
+    <div class="table-nav">
+      <button class="table-nav-arrow" style="visibility:hidden;"></button>
+      <div class="table-title">Student Table</div>
+      <button class="table-nav-arrow">▶</button>
+    </div>
+    <div style="display:flex;gap:10px;padding:10px 14px 4px;background:#fff;">
+      <select class="select-section">
+        <option>Select Section ▼</option>
+        <option>Section A</option>
+        <option>Section B</option>
+        <option>Section C</option>
+      </select>
+    </div>
+    <table>
+      <thead>
+        <tr><th>ID</th><th>Role</th><th>First Name</th><th>Last Name</th><th>Initial</th><th>Section</th><th>Grade Level</th><th>Batch Year</th><th>Gender</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><div class="action-btns"><button class="action-edit">✎</button><button class="action-delete">🗑</button></div></td></tr>
+      </tbody>
+    </table>
+    <div class="scrollbar-hint"></div>
+  </div>
+</div>
+
+<!-- ===== PROFILE PAGE ===== -->
+<div class="page" id="page-profile">
+  <div class="profile-wrap">
+    <div class="profile-card">
+      <div class="profile-avatar">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      </div>
+      <div class="profile-fields">
+        <div class="profile-field">
+          <div class="edit-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+          <span>Change Name</span>
+        </div>
+        <div class="profile-field">
+          <div class="edit-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+          <span>Role Title</span>
+        </div>
+        <div class="profile-field">
+          <div class="edit-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+          <span>ID: 01234568</span>
+        </div>
+        <div class="profile-field">
+          <div class="edit-icon"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></div>
+          <span>Gender: Male</span>
+        </div>
+      </div>
+      <button class="change-pw-btn" onclick="showToast('Change Password dialog opened.')">
+        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+        Change Password
+      </button>
+      <button class="save-btn" onclick="showToast('Profile saved!')">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EMERGENCY ALARM MODAL ===== -->
+<div class="alarm-overlay" id="alarm-overlay">
+  <div class="alarm-modal">
+    <div class="alarm-modal-header">
+      <button class="view-prev-btn" onclick="showToast('Viewing previous alarms.')">View Previous</button>
+      <button class="exit-btn" onclick="closeAlarm()">Exit</button>
+    </div>
+    <div class="alarm-title">
+      <div class="excl-icon">!</div>
+      <span>Announch Emergency Alarm</span>
+    </div>
+    <div class="alarm-form-row">
+      <div class="alarm-form-group">
+        <label>Type of Emergency Alarm</label>
+        <select class="alarm-select">
+          <option>Select</option>
+          <option>Fire</option>
+          <option>Earthquake</option>
+          <option>Flood</option>
+          <option>Lockdown</option>
+          <option>Medical</option>
+        </select>
+      </div>
+      <div class="alarm-form-group">
+        <label>Time Occured</label>
+        <input type="text" class="alarm-time-input" value="9:30 AM">
+      </div>
+    </div>
+    <label class="alarm-desc-label">Description:</label>
+    <textarea class="alarm-textarea" placeholder=""></textarea>
+    <button class="announce-btn" onclick="showToast('Emergency alarm announced!'); closeAlarm();">Announce</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ===== PAGE NAVIGATION =====
+  function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    if (page === 'home') {
+      document.getElementById('page-home').classList.add('active');
+      document.querySelectorAll('.nav-item')[0].classList.add('active');
+    } else if (page === 'reports') {
+      document.getElementById('page-reports').classList.add('active');
+      document.querySelectorAll('.nav-item')[1].classList.add('active');
+      // Show menu if no sub-page is active
+      const anySub = document.querySelectorAll('#page-reports .sub-page.active');
+      if (anySub.length === 0) {
+        document.getElementById('reports-menu').style.display = 'block';
+      }
+    } else if (page === 'history') {
+      document.getElementById('page-history').classList.add('active');
+      document.querySelectorAll('.nav-item')[2].classList.add('active');
+    } else if (page === 'profile') {
+      document.getElementById('page-profile').classList.add('active');
+      document.querySelectorAll('.nav-item')[3].classList.add('active');
+    } else if (page === 'admin') {
+      document.getElementById('page-admin').classList.add('active');
+      document.querySelectorAll('.nav-item')[0].classList.add('active');
+    }
+  }
+
+  // ===== SUB PAGES (Reports) =====
+  function showSubPage(sub) {
+    document.getElementById('reports-menu').style.display = 'none';
+    document.querySelectorAll('#page-reports .sub-page').forEach(s => s.classList.remove('active'));
+    document.getElementById('sub-' + sub).classList.add('active');
+  }
+
+  function hideSubPages() {
+    document.querySelectorAll('#page-reports .sub-page').forEach(s => s.classList.remove('active'));
+    document.getElementById('reports-menu').style.display = 'block';
+  }
+
+  // ===== INCIDENT PAGINATION =====
+  function switchIncidentPage(page) {
+    document.getElementById('incidents-page1').style.display = page === 1 ? 'block' : 'none';
+    document.getElementById('incidents-page2').style.display = page === 2 ? 'block' : 'none';
+  }
+
+  // ===== ADMIN TABLES =====
+  function showAdminTable(type) {
+    ['admin','security','faculty','student'].forEach(t => {
+      document.getElementById('table-' + t).style.display = 'none';
+      document.getElementById('btn-' + t).style.background = '#ccc';
+      document.getElementById('btn-' + t).style.color = '#333';
+    });
+    document.getElementById('table-' + type).style.display = 'block';
+    document.getElementById('btn-' + type).style.background = '#F07A20';
+    document.getElementById('btn-' + type).style.color = '#fff';
+  }
+
+  // ===== ALARM MODAL =====
+  function openAlarm() {
+    document.getElementById('alarm-overlay').classList.add('active');
+  }
+  function closeAlarm() {
+    document.getElementById('alarm-overlay').classList.remove('active');
+  }
+  document.getElementById('alarm-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeAlarm();
+  });
+
+  // ===== TOAST =====
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // ===== HOME nav: clicking HOME shows admin tables option =====
+  // We add a double-click or a dedicated link on Home page
+  // For simplicity, let's add a small "Admin Panel" link at bottom of home
+  // Actually per the designs, the Home tab shows the Admin tables.
+  // Let's make the HOME nav toggle between home-card and admin-page
+  let homeState = 'menu'; // 'menu' or 'admin'
+  const origHomeClick = document.querySelectorAll('.nav-item')[0].onclick;
+  document.querySelectorAll('.nav-item')[0].addEventListener('click', function() {
+    // If already on home, toggle
+    if (document.getElementById('page-home').classList.contains('active')) {
+      homeState = homeState === 'menu' ? 'admin' : 'menu';
+    } else {
+      homeState = 'menu';
+    }
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    this.classList.add('active');
+    if (homeState === 'admin') {
+      document.getElementById('page-admin').classList.add('active');
+    } else {
+      document.getElementById('page-home').classList.add('active');
+    }
+  });
+</script>
+
+</body>
+</html>
